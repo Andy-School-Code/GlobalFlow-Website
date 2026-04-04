@@ -1,7 +1,11 @@
 export default function HomePage() {
   return (
-    <main className="flex-1 flex items-center justify-center">
-      <h1 className="text-4xl font-bold">Hello, Next.js!</h1>
+    <main className="min-h-[200vh] bg-[#f5f5f5] pt-24">
+      <section className="flex items-center justify-center py-20">
+        <h1 className="text-5xl font-bold text-[#123b78]">
+          GlobalFlow Trading Inc.
+        </h1>
+      </section>
     </main>
   );
 }
