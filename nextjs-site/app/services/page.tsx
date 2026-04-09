@@ -13,6 +13,11 @@ const desktopCards = [
     imageLabelTop: "B2B",
     imageLabelBottom: "TRADING",
     bg: "bg-[linear-gradient(135deg,#48bfd1,#2f8fa6)]",
+    details: [
+      "We help businesses connect with trusted suppliers across different markets.",
+      "Our sourcing support focuses on quality, suitability, and supplier coordination.",
+      "We work to simplify the sourcing process for growing businesses.",
+    ],
   },
   {
     id: "import-export",
@@ -24,6 +29,11 @@ const desktopCards = [
     imageLabelBottom: "IMPORT",
     bg: "bg-[linear-gradient(135deg,#f2f2f2,#d9d9d9)]",
     darkText: true,
+    details: [
+      "We support documentation flow and communication between key parties.",
+      "Our team helps manage coordination for international trade activities.",
+      "This helps reduce delays and improves operational efficiency.",
+    ],
   },
   {
     id: "logistics-freight",
@@ -34,6 +44,11 @@ const desktopCards = [
     imageLabelTop: "",
     imageLabelBottom: "",
     bg: "bg-[linear-gradient(135deg,#5fa691,#356e61)]",
+    details: [
+      "We assist with freight planning and shipping coordination.",
+      "Our logistics support helps businesses improve shipment visibility.",
+      "We focus on smooth delivery management and transport planning.",
+    ],
   },
   {
     id: "compliance-documentation",
@@ -44,29 +59,38 @@ const desktopCards = [
     imageLabelTop: "COMPLIANCE",
     imageLabelBottom: "",
     bg: "bg-[linear-gradient(135deg,#63a99a,#417f74)]",
+    details: [
+      "We help businesses prepare and manage trade-related documents.",
+      "Our support covers documentation and compliance coordination.",
+      "This makes customs and international shipping processes easier to handle.",
+    ],
   },
 ];
 
 const mobileCards = [
   {
+    id: "global-sourcing",
     icon: "🗂",
     title: "Global Sourcing",
     description:
       "Our sourcing services help businesses identify trusted suppliers.",
   },
   {
+    id: "import-export",
     icon: "↕",
     title: "Import / Export Coordination",
     description:
       "We manage international trade processes including documentation and shipment coordination.",
   },
   {
+    id: "logistics-freight",
     icon: "🚚",
     title: "Logistics & Freight Support",
     description:
       "Support for shipping coordination and logistics management.",
   },
   {
+    id: "compliance-documentation",
     icon: "📄",
     title: "Compliance & Documentation",
     description:
@@ -145,7 +169,6 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          {/* Grid */}
           <div className="mt-10 grid gap-6 xl:grid-cols-3">
             {desktopCards.map((card, index) => (
               <div
@@ -202,7 +225,6 @@ export default function ServicesPage() {
               </div>
             ))}
 
-            {/* CTA card */}
             <div className="rounded-xl bg-[#0d4c8f] p-8 text-white shadow-[0_8px_18px_rgba(0,0,0,0.05)]">
               <div className="flex min-h-[398px] flex-col justify-center">
                 <h3 className="text-[2rem] font-bold leading-tight">
@@ -225,7 +247,6 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* Bottom CTA */}
         <section className="bg-[#eef2f6] py-20">
           <div className="mx-auto w-[88%] text-center">
             <h2 className="text-[3rem] font-bold text-[#16233e]">
@@ -260,7 +281,6 @@ export default function ServicesPage() {
       {/* MOBILE */}
       <div className="md:hidden">
         <section className="mx-auto w-[88%] py-6">
-          {/* Hero card */}
           <div className="relative overflow-hidden rounded-2xl">
             <div className="h-[155px] bg-[linear-gradient(135deg,#6cb4f4,#1f5d94)]" />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.15),rgba(7,27,53,0.75))]" />
@@ -275,7 +295,6 @@ export default function ServicesPage() {
             </div>
           </div>
 
-          {/* Core services */}
           <section className="mt-8">
             <h2 className="text-[2rem] font-bold text-[#16233e]">
               Our Core Services
@@ -286,9 +305,11 @@ export default function ServicesPage() {
 
             <div className="mt-5 space-y-4">
               {mobileCards.map((card) => (
-                <div
+                <button
                   key={card.title}
-                  className="flex items-center gap-4 rounded-2xl border border-[#e5e8ee] bg-white px-4 py-5 shadow-[0_6px_14px_rgba(0,0,0,0.03)]"
+                  type="button"
+                  onClick={() => openModal(card.id)}
+                  className="flex w-full items-center gap-4 rounded-2xl border border-[#e5e8ee] bg-white px-4 py-5 text-left shadow-[0_6px_14px_rgba(0,0,0,0.03)]"
                 >
                   <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-[#eef2f5] text-[1.3rem] text-[#0d4c8f]">
                     {card.icon}
@@ -304,11 +325,10 @@ export default function ServicesPage() {
                   </div>
 
                   <div className="text-[1.5rem] text-[#8b97ab]">›</div>
-                </div>
+                </button>
               ))}
             </div>
 
-            {/* Mobile CTA Card */}
             <div className="mt-6 rounded-3xl bg-[#0d4c8f] px-6 py-8 text-white shadow-sm">
               <h3 className="text-[2rem] font-bold leading-tight">
                 Need a Custom
@@ -332,10 +352,10 @@ export default function ServicesPage() {
         </section>
       </div>
 
-      {/* DESKTOP MODAL ONLY FOR NOW */}
+      {/* MODAL */}
       {activeCard && (
-        <div className="fixed inset-0 z-50 hidden items-center justify-center bg-[#0d1b34]/60 px-4 md:flex">
-          <div className="relative w-full max-w-xl rounded-3xl bg-white p-8 shadow-[0_20px_60px_rgba(0,0,0,0.20)]">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0d1b34]/60 px-4 py-6">
+          <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white shadow-[0_20px_60px_rgba(0,0,0,0.20)]">
             <button
               type="button"
               onClick={closeModal}
@@ -344,21 +364,56 @@ export default function ServicesPage() {
               ×
             </button>
 
-            <h3 className="pr-12 text-[1.9rem] font-bold text-[#16233e]">
-              {activeCard.title}
-            </h3>
-
-            <p className="mt-4 text-[15px] leading-8 text-[#5e6d89]">
-              {activeCard.description}
-            </p>
-
-            <Link
-              href="/contact#book-call"
-              onClick={closeModal}
-              className="mt-8 inline-block rounded-xl bg-[#0d4c8f] px-5 py-3 text-[14px] font-semibold text-white"
+            <div
+              className={`rounded-t-3xl px-6 py-10 md:px-8 ${activeCard.bg}`}
             >
-              Speak with an Expert
-            </Link>
+              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0d4c8f] text-white shadow">
+                {activeCard.icon}
+              </div>
+
+              <h3
+                className={`mt-6 text-[1.9rem] font-bold ${
+                  activeCard.darkText ? "text-[#2f3d55]" : "text-white"
+                }`}
+              >
+                {activeCard.title}
+              </h3>
+
+              <p
+                className={`mt-3 max-w-2xl text-[15px] leading-7 ${
+                  activeCard.darkText ? "text-[#5f6f86]" : "text-white/85"
+                }`}
+              >
+                {activeCard.description}
+              </p>
+            </div>
+
+            <div className="px-6 py-6 md:px-8 md:py-8">
+              <h4 className="text-[1rem] font-semibold text-[#16233e]">
+                Service Overview
+              </h4>
+
+              <div className="mt-4 space-y-3">
+                {activeCard.details.map((item) => (
+                  <div
+                    key={item}
+                    className="rounded-2xl bg-[#f6f8fb] px-4 py-3 text-[14px] leading-7 text-[#64748b]"
+                  >
+                    {item}
+                  </div>
+                ))}
+              </div>
+
+              <div className="mt-8">
+                <Link
+                  href="/contact#book-call"
+                  onClick={closeModal}
+                  className="inline-block rounded-xl bg-[#0d4c8f] px-5 py-3 text-[14px] font-semibold text-white"
+                >
+                  Speak with an Expert
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       )}
