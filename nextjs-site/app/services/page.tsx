@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState } from "react";
+import Image from "next/image";
 import Link from "next/link";
 
 const desktopCards = [
@@ -74,6 +75,7 @@ const mobileCards = [
     title: "Global Sourcing",
     description:
       "Our sourcing services help businesses identify trusted suppliers.",
+    imageSrc: "/images/services/global-sourcing-icon.png",
   },
   {
     id: "import-export",
@@ -81,6 +83,7 @@ const mobileCards = [
     title: "Import / Export Coordination",
     description:
       "We manage international trade processes including documentation and shipment coordination.",
+    imageSrc: "/images/services/import-export-icon.png",
   },
   {
     id: "logistics-freight",
@@ -282,7 +285,15 @@ export default function ServicesPage() {
       <div className="md:hidden">
         <section className="mx-auto w-[88%] py-6">
           <div className="relative overflow-hidden rounded-2xl">
-            <div className="h-[155px] bg-[linear-gradient(135deg,#6cb4f4,#1f5d94)]" />
+            <div className="relative h-[185px] w-full">
+              <Image
+                src="/images/services/services-hero.png"
+                alt="GlobalFlow Trading mobile services hero"
+                fill
+                className="object-cover"
+                priority
+              />
+            </div>
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.15),rgba(7,27,53,0.75))]" />
             <div className="absolute bottom-4 left-5 right-5">
               <h1 className="text-[2rem] font-bold leading-tight text-white">
@@ -311,8 +322,19 @@ export default function ServicesPage() {
                   onClick={() => openModal(card.id)}
                   className="flex w-full items-center gap-4 rounded-2xl border border-[#e5e8ee] bg-white px-4 py-5 text-left shadow-[0_6px_14px_rgba(0,0,0,0.03)]"
                 >
-                  <div className="flex h-14 w-14 flex-shrink-0 items-center justify-center rounded-xl bg-[#eef2f5] text-[1.3rem] text-[#0d4c8f]">
-                    {card.icon}
+                  <div className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#eef2f5]">
+                    {card.imageSrc ? (
+                      <Image
+                        src={card.imageSrc}
+                        alt={card.title}
+                        fill
+                        className="object-contain p-2"
+                      />
+                    ) : (
+                      <span className="text-[1.3rem] text-[#0d4c8f]">
+                        {card.icon}
+                      </span>
+                    )}
                   </div>
 
                   <div className="min-w-0 flex-1">
