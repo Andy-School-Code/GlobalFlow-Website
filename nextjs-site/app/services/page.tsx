@@ -11,9 +11,7 @@ const desktopCards = [
     title: "Global Sourcing",
     description:
       "Our sourcing services help businesses identify trusted suppliers for a wide range of products. We work with verified partners to ensure product quality and competitive pricing.",
-    imageLabelTop: "B2B",
-    imageLabelBottom: "TRADING",
-    bg: "bg-[linear-gradient(135deg,#48bfd1,#2f8fa6)]",
+    imageSrc: "/images/services/global-sourcing-desktop.jpg",
     details: [
       "We help businesses connect with trusted suppliers across different markets.",
       "Our sourcing support focuses on quality, suitability, and supplier coordination.",
@@ -26,10 +24,7 @@ const desktopCards = [
     title: "Import / Export Coordination",
     description:
       "We manage international trade processes including documentation, supplier communication, and shipment coordination. This ensures smooth cross-border transactions.",
-    imageLabelTop: "EXPORT",
-    imageLabelBottom: "IMPORT",
-    bg: "bg-[linear-gradient(135deg,#f2f2f2,#d9d9d9)]",
-    darkText: true,
+    imageSrc: "/images/services/import-export-desktop.jpg",
     details: [
       "We support documentation flow and communication between key parties.",
       "Our team helps manage coordination for international trade activities.",
@@ -42,9 +37,7 @@ const desktopCards = [
     title: "Logistics & Freight Support",
     description:
       "GlobalFlow Trading provides support for shipping coordination, freight planning, and logistics management to ensure efficient delivery of products.",
-    imageLabelTop: "",
-    imageLabelBottom: "",
-    bg: "bg-[linear-gradient(135deg,#5fa691,#356e61)]",
+    imageSrc: "/images/services/logistics-desktop.jpg",
     details: [
       "We assist with freight planning and shipping coordination.",
       "Our logistics support helps businesses improve shipment visibility.",
@@ -57,9 +50,7 @@ const desktopCards = [
     title: "Compliance & Documentation",
     description:
       "We assist businesses with trade documentation and compliance requirements related to international shipping and customs procedures.",
-    imageLabelTop: "COMPLIANCE",
-    imageLabelBottom: "",
-    bg: "bg-[linear-gradient(135deg,#63a99a,#417f74)]",
+    imageSrc: "/images/services/compliance-desktop.jpg",
     details: [
       "We help businesses prepare and manage trade-related documents.",
       "Our support covers documentation and compliance coordination.",
@@ -121,7 +112,6 @@ export default function ServicesPage() {
     <main className="bg-[#f3f4f6] pt-20 text-[#13213d]">
       {/* DESKTOP / TABLET */}
       <div className="hidden md:block">
-        {/* Hero */}
         <section className="relative overflow-hidden bg-[#0d4c8f]">
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.08),transparent_35%)]" />
           <div className="mx-auto w-[88%] py-16 lg:py-20">
@@ -142,7 +132,6 @@ export default function ServicesPage() {
           </div>
         </section>
 
-        {/* Services intro */}
         <section className="mx-auto w-[88%] py-14 lg:py-16">
           <div className="flex items-start justify-between gap-6">
             <div>
@@ -175,36 +164,23 @@ export default function ServicesPage() {
           <div className="mt-10 grid gap-6 xl:grid-cols-3">
             {desktopCards.map((card, index) => (
               <div
-                key={card.title}
-                className={`overflow-hidden rounded-xl border border-[#e6e9ef] bg-white shadow-[0_8px_18px_rgba(0,0,0,0.04)] ${
+                key={card.id}
+                className={`overflow-hidden rounded-xl border border-[#e6e9ef] bg-white shadow-[0_8px_18px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 ${
                   index === 3 ? "xl:col-span-1" : ""
                 }`}
               >
-                <div
-                  className={`relative flex h-[210px] items-center justify-center ${card.bg}`}
-                >
+                <div className="relative h-[210px] overflow-hidden">
+                  <Image
+                    src={card.imageSrc}
+                    alt={card.title}
+                    fill
+                    className="object-cover"
+                  />
+
+                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.08),rgba(7,27,53,0.35))]" />
+
                   <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-md bg-[#0d4c8f] text-sm text-white shadow">
                     {card.icon}
-                  </div>
-
-                  <div
-                    className={`text-center ${
-                      card.darkText ? "text-[#6c7b90]" : "text-white/85"
-                    }`}
-                  >
-                    {card.imageLabelTop && (
-                      <div className="text-[3.1rem] font-bold leading-none tracking-wide opacity-80">
-                        {card.imageLabelTop}
-                      </div>
-                    )}
-                    {card.imageLabelBottom && (
-                      <div className="mt-3 text-[2rem] font-medium tracking-[0.16em] opacity-80">
-                        {card.imageLabelBottom}
-                      </div>
-                    )}
-                    {!card.imageLabelTop && !card.imageLabelBottom && (
-                      <div className="text-6xl opacity-80">{card.icon}</div>
-                    )}
                   </div>
                 </div>
 
@@ -317,7 +293,7 @@ export default function ServicesPage() {
             <div className="mt-5 space-y-4">
               {mobileCards.map((card) => (
                 <button
-                  key={card.title}
+                  key={card.id}
                   type="button"
                   onClick={() => openModal(card.id)}
                   className="flex w-full items-center gap-4 rounded-2xl border border-[#e5e8ee] bg-white px-4 py-5 text-left shadow-[0_6px_14px_rgba(0,0,0,0.03)]"
@@ -381,41 +357,38 @@ export default function ServicesPage() {
             <button
               type="button"
               onClick={closeModal}
-              className="absolute right-4 top-4 flex h-10 w-10 items-center justify-center rounded-full bg-[#f2f5f9] text-[1.4rem] text-[#22304a]"
+              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[1.4rem] text-[#22304a]"
             >
               ×
             </button>
 
-            <div
-              className={`rounded-t-3xl px-6 py-10 md:px-8 ${activeCard.bg}`}
-            >
-              <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0d4c8f] text-white shadow">
-                {activeCard.icon}
+            <div className="relative h-[240px] overflow-hidden rounded-t-3xl">
+              <Image
+                src={activeCard.imageSrc}
+                alt={activeCard.title}
+                fill
+                className="object-cover"
+              />
+
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.10),rgba(7,27,53,0.45))]" />
+
+              <div className="absolute left-6 bottom-6">
+                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0d4c8f] text-white shadow">
+                  {activeCard.icon}
+                </div>
+
+                <h3 className="mt-4 text-[1.9rem] font-bold text-white">
+                  {activeCard.title}
+                </h3>
               </div>
-
-              <h3
-                className={`mt-6 text-[1.9rem] font-bold ${
-                  activeCard.darkText ? "text-[#2f3d55]" : "text-white"
-                }`}
-              >
-                {activeCard.title}
-              </h3>
-
-              <p
-                className={`mt-3 max-w-2xl text-[15px] leading-7 ${
-                  activeCard.darkText ? "text-[#5f6f86]" : "text-white/85"
-                }`}
-              >
-                {activeCard.description}
-              </p>
             </div>
 
             <div className="px-6 py-6 md:px-8 md:py-8">
-              <h4 className="text-[1rem] font-semibold text-[#16233e]">
-                Service Overview
-              </h4>
+              <p className="text-[15px] leading-7 text-[#5f6f86]">
+                {activeCard.description}
+              </p>
 
-              <div className="mt-4 space-y-3">
+              <div className="mt-5 space-y-3">
                 {activeCard.details.map((item) => (
                   <div
                     key={item}
