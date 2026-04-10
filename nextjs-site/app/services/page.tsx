@@ -1,9 +1,9 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { animate, AnimatePresence, motion, useInView } from "motion/react";
+import { AnimatePresence, motion } from "motion/react";
 import AnimatedContent from "@/components/reactbits/AnimatedContent";
 import BlurText from "@/components/reactbits/BlurText";
 import FadeContent from "@/components/reactbits/FadeContent";
@@ -98,24 +98,6 @@ const mobileCards = [
   },
 ];
 
-const serviceHighlights = [
-  {
-    label: "Markets supported",
-    value: 150,
-    suffix: "+",
-  },
-  {
-    label: "Response turnaround",
-    value: 1,
-    suffix: " day",
-  },
-  {
-    label: "Service pillars",
-    value: 4,
-    suffix: "",
-  },
-];
-
 const serviceSteps = [
   {
     title: "Source smarter",
@@ -133,39 +115,6 @@ const serviceSteps = [
       "Reduce friction from customs, freight planning, and final delivery execution.",
   },
 ];
-
-function CountUpValue({
-  value,
-  suffix = "",
-}: {
-  value: number;
-  suffix?: string;
-}) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const isInView = useInView(ref, { once: true, amount: 0.65 });
-  const [displayValue, setDisplayValue] = useState(0);
-
-  useEffect(() => {
-    if (!isInView) return;
-
-    const controls = animate(0, value, {
-      duration: 1.1,
-      ease: "easeOut",
-      onUpdate: (latest) => {
-        setDisplayValue(Math.round(latest));
-      },
-    });
-
-    return () => controls.stop();
-  }, [isInView, value]);
-
-  return (
-    <span ref={ref}>
-      {displayValue}
-      {suffix}
-    </span>
-  );
-}
 
 export default function ServicesPage() {
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
@@ -553,50 +502,7 @@ export default function ServicesPage() {
                   Empowering global trade through strategic sourcing, shipping,
                   logistics, and compliance support.
                 </p>
-
-                <div className="mt-6 flex gap-3">
-                  <Link
-                    href="/contact#book-call"
-                    className="rounded-full bg-white px-4 py-3 text-[13px] font-semibold text-[#0d4c8f]"
-                  >
-                    <ShinyText text="Book a Call" speed={3} className="text-[#0d4c8f]" />
-                  </Link>
-                  <Link
-                    href="/contact"
-                    className="rounded-full border border-white/18 bg-white/10 px-4 py-3 text-[13px] font-semibold text-white backdrop-blur-sm"
-                  >
-                    <ShinyText text="Contact" speed={3} className="text-white" />
-                  </Link>
-                </div>
               </div>
-            </div>
-          </AnimatedContent>
-
-          <AnimatedContent
-            distance={32}
-            direction="vertical"
-            reverse={false}
-            duration={0.78}
-            ease="power3.out"
-            initialOpacity={0}
-            animateOpacity
-            scale={0.98}
-            threshold={0.15}
-          >
-            <div className="mt-6 grid grid-cols-3 gap-3">
-              {serviceHighlights.map((item) => (
-                <div
-                  key={item.label}
-                  className="rounded-[22px] border border-[#d8e3f0] bg-white px-3 py-4 text-center shadow-[0_8px_20px_rgba(0,0,0,0.03)]"
-                >
-                  <p className="text-[1.2rem] font-semibold text-[#16233e]">
-                    <CountUpValue value={item.value} suffix={item.suffix} />
-                  </p>
-                  <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-[#6d7c92]">
-                    {item.label}
-                  </p>
-                </div>
-              ))}
             </div>
           </AnimatedContent>
 
