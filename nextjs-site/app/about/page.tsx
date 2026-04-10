@@ -26,6 +26,35 @@ const pillars = [
   },
 ];
 
+const capabilities = [
+  {
+    icon: "01",
+    title: "Product Sourcing",
+    description:
+      "We help businesses identify reliable suppliers and evaluate options with greater confidence.",
+  },
+  {
+    icon: "02",
+    title: "Trade Documentation",
+    description:
+      "Our coordination keeps shipping paperwork, customs files, and trade records organized and moving.",
+  },
+  {
+    icon: "03",
+    title: "Shipment Coordination",
+    description:
+      "We support communication across suppliers, freight partners, and receiving teams to reduce delays.",
+  },
+  {
+    icon: "04",
+    title: "Market Guidance",
+    description:
+      "We provide practical trade support for businesses expanding into new regions and supply networks.",
+  },
+];
+
+const markets = ["North America", "South America", "Europe", "Middle East"];
+
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#f3f4f6] pt-20 text-[#13213d]">
@@ -197,6 +226,153 @@ export default function AboutPage() {
                 <p className="mt-4 max-w-md text-[15px] leading-8 text-white/78">
                   {pillar.description}
                 </p>
+              </div>
+            </AnimatedContent>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto w-[92%] max-w-7xl py-12 sm:py-14 xl:w-[88%]">
+        <AnimatedContent
+          distance={40}
+          direction="vertical"
+          reverse={false}
+          duration={0.75}
+          ease="power3.out"
+          initialOpacity={0}
+          animateOpacity
+          scale={0.98}
+          threshold={0.15}
+        >
+          <div className="text-center">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.24em] text-[#6f8099]">
+              What We Do
+            </p>
+
+            <h2 className="mt-4 text-[1.95rem] font-bold text-[#16233e] sm:text-[2.35rem]">
+              Coordinated support for every stage of trade.
+            </h2>
+
+            <p className="mx-auto mt-5 max-w-2xl text-[15px] leading-8 text-[#627089]">
+              We bring sourcing, documentation, and shipment execution into one
+              clear workflow so businesses can move faster with fewer surprises.
+            </p>
+          </div>
+        </AnimatedContent>
+
+        <div className="mt-10 grid gap-6 md:grid-cols-2 xl:grid-cols-4">
+          {capabilities.map((capability, index) => (
+            <AnimatedContent
+              key={capability.title}
+              distance={42}
+              direction="vertical"
+              reverse={false}
+              duration={0.8}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.97}
+              threshold={0.15}
+              delay={index * 0.06}
+            >
+              <div className="h-full rounded-[28px] border border-[#e5e8ee] bg-white p-6 shadow-[0_12px_28px_rgba(0,0,0,0.04)]">
+                <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#edf5ff] text-[13px] font-semibold text-[#0d4c8f]">
+                  {capability.icon}
+                </div>
+
+                <h3 className="mt-5 text-[1.15rem] font-semibold text-[#1a2740]">
+                  {capability.title}
+                </h3>
+
+                <p className="mt-4 text-[14px] leading-7 text-[#6b7890]">
+                  {capability.description}
+                </p>
+              </div>
+            </AnimatedContent>
+          ))}
+        </div>
+      </section>
+
+      <section className="mx-auto w-[92%] max-w-7xl pb-12 xl:w-[88%]">
+        <AnimatedContent
+          distance={40}
+          direction="vertical"
+          reverse={false}
+          duration={0.8}
+          ease="power3.out"
+          initialOpacity={0}
+          animateOpacity
+          scale={0.98}
+          threshold={0.15}
+        >
+          <div className="relative overflow-hidden rounded-[32px] border border-[#dfe6ef] bg-[#0e3157] shadow-[0_10px_28px_rgba(0,0,0,0.05)]">
+            <div className="absolute inset-0">
+              <Image
+                src="/images/aboutus/globe-image.jpg"
+                alt="Global trade map visualization"
+                fill
+                className="object-cover object-center"
+              />
+            </div>
+
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,24,46,0.42),rgba(8,24,46,0.24))]" />
+
+            <div className="relative flex min-h-[260px] items-center justify-center px-6 py-10 sm:min-h-[300px] sm:px-8">
+              <div className="max-w-md rounded-[24px] border border-white/30 bg-white/82 p-5 text-center shadow-[0_16px_30px_rgba(17,57,102,0.12)] backdrop-blur-sm">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#67809a]">
+                  Global trade network
+                </p>
+
+                <h3 className="mt-3 text-[1.25rem] font-semibold text-[#173053]">
+                  Connecting suppliers, logistics partners, and growth-focused
+                  businesses worldwide.
+                </h3>
+              </div>
+            </div>
+          </div>
+        </AnimatedContent>
+      </section>
+
+      <section className="mx-auto w-[92%] max-w-7xl py-4 pb-12 xl:w-[88%]">
+        <AnimatedContent
+          distance={40}
+          direction="vertical"
+          reverse={false}
+          duration={0.75}
+          ease="power3.out"
+          initialOpacity={0}
+          animateOpacity
+          scale={0.98}
+          threshold={0.15}
+        >
+          <div className="text-center">
+            <p className="text-[12px] font-semibold uppercase tracking-[0.24em] text-[#6f8099]">
+              Markets We Serve
+            </p>
+
+            <h2 className="mt-4 text-[1.9rem] font-bold text-[#16233e] sm:text-[2.2rem]">
+              Built for cross-market coordination.
+            </h2>
+          </div>
+        </AnimatedContent>
+
+        <div className="mt-8 grid gap-4 sm:grid-cols-2 xl:grid-cols-4">
+          {markets.map((market, index) => (
+            <AnimatedContent
+              key={market}
+              distance={35}
+              direction="vertical"
+              reverse={false}
+              duration={0.7}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.98}
+              threshold={0.15}
+              delay={index * 0.05}
+            >
+              <div className="rounded-[22px] border border-[#dfe5ee] bg-white px-5 py-4 text-center text-[14px] font-semibold text-[#223450] shadow-[0_8px_18px_rgba(0,0,0,0.03)]">
+                {market}
               </div>
             </AnimatedContent>
           ))}
