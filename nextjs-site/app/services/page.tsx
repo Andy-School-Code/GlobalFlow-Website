@@ -1,8 +1,14 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { animate, AnimatePresence, motion, useInView } from "motion/react";
+import AnimatedContent from "@/components/reactbits/AnimatedContent";
+import BlurText from "@/components/reactbits/BlurText";
+import FadeContent from "@/components/reactbits/FadeContent";
+import ShinyText from "@/components/reactbits/ShinyText";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 const desktopCards = [
   {
@@ -92,6 +98,75 @@ const mobileCards = [
   },
 ];
 
+const serviceHighlights = [
+  {
+    label: "Markets supported",
+    value: 150,
+    suffix: "+",
+  },
+  {
+    label: "Response turnaround",
+    value: 1,
+    suffix: " day",
+  },
+  {
+    label: "Service pillars",
+    value: 4,
+    suffix: "",
+  },
+];
+
+const serviceSteps = [
+  {
+    title: "Source smarter",
+    description:
+      "Shortlist reliable suppliers, compare options, and move forward with more confidence.",
+  },
+  {
+    title: "Coordinate globally",
+    description:
+      "Keep shipments, documentation, and supplier communication moving in sync.",
+  },
+  {
+    title: "Deliver smoothly",
+    description:
+      "Reduce friction from customs, freight planning, and final delivery execution.",
+  },
+];
+
+function CountUpValue({
+  value,
+  suffix = "",
+}: {
+  value: number;
+  suffix?: string;
+}) {
+  const ref = useRef<HTMLSpanElement>(null);
+  const isInView = useInView(ref, { once: true, amount: 0.65 });
+  const [displayValue, setDisplayValue] = useState(0);
+
+  useEffect(() => {
+    if (!isInView) return;
+
+    const controls = animate(0, value, {
+      duration: 1.1,
+      ease: "easeOut",
+      onUpdate: (latest) => {
+        setDisplayValue(Math.round(latest));
+      },
+    });
+
+    return () => controls.stop();
+  }, [isInView, value]);
+
+  return (
+    <span ref={ref}>
+      {displayValue}
+      {suffix}
+    </span>
+  );
+}
+
 export default function ServicesPage() {
   const [activeCardId, setActiveCardId] = useState<string | null>(null);
 
@@ -108,150 +183,326 @@ export default function ServicesPage() {
     setActiveCardId(null);
   };
 
+  useEffect(() => {
+    if (!activeCard) {
+      document.body.style.overflow = "";
+      return;
+    }
+
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        closeModal();
+      }
+    };
+
+    document.body.style.overflow = "hidden";
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      document.body.style.overflow = "";
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, [activeCard]);
+
   return (
     <main className="bg-[#f3f4f6] pt-20 text-[#13213d]">
       {/* DESKTOP / TABLET */}
       <div className="hidden md:block">
         <section className="relative overflow-hidden bg-[#0d4c8f]">
+          <div className="absolute inset-0">
+            <Image
+              src="/images/services/services-hero.png"
+              alt="GlobalFlow Trading services hero"
+              fill
+              className="object-cover"
+              priority
+            />
+          </div>
+          <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,31,63,0.9),rgba(8,49,96,0.68))]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.08),transparent_35%)]" />
-          <div className="mx-auto w-[88%] py-16 lg:py-20">
-            <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-white/80">
-              Our Expertise
-            </p>
+          <div className="pointer-events-none absolute -left-10 top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+          <div className="pointer-events-none absolute bottom-8 right-10 h-48 w-48 rounded-full bg-[#9fd0ff]/15 blur-3xl" />
 
-            <h1 className="mt-5 max-w-3xl text-5xl font-bold leading-[1.02] text-white lg:text-6xl">
-              Comprehensive Global
-              <br />
-              Trading Solutions
-            </h1>
+          <div className="relative mx-auto w-[88%] py-16 lg:py-20">
+            <AnimatedContent
+              distance={60}
+              direction="vertical"
+              reverse={false}
+              duration={0.8}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={1}
+              threshold={0.15}
+            >
+              <div className="max-w-3xl">
+                  <FadeContent blur duration={700} easing="ease-out" initialOpacity={0}>
+                    <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/75 backdrop-blur-sm">
+                      Our Expertise
+                    </p>
+                  </FadeContent>
 
-            <p className="mt-6 max-w-2xl text-[16px] leading-8 text-white/80">
-              Empowering your business with seamless international trade,
-              logistics, and compliance expertise across 150+ countries.
-            </p>
+                  <div className="mt-5">
+                    <BlurText
+                      text="Comprehensive Global Trading Solutions"
+                      delay={120}
+                      animateBy="words"
+                      direction="top"
+                      className="max-w-3xl text-5xl font-bold leading-[1.02] text-white lg:text-6xl"
+                    />
+                  </div>
+
+                  <FadeContent blur duration={900} easing="ease-out" initialOpacity={0}>
+                    <p className="mt-6 max-w-2xl text-[16px] leading-8 text-white/82">
+                      Empowering your business with seamless international trade,
+                      logistics, and compliance expertise across global markets.
+                    </p>
+                  </FadeContent>
+
+                  <FadeContent blur duration={1000} easing="ease-out" initialOpacity={0}>
+                    <div className="mt-8" />
+                  </FadeContent>
+              </div>
+            </AnimatedContent>
           </div>
         </section>
 
         <section className="mx-auto w-[88%] py-14 lg:py-16">
-          <div className="flex items-start justify-between gap-6">
-            <div>
-              <h2 className="text-[2.3rem] font-bold text-[#16233e]">
-                Specialized Trading Services
-              </h2>
-              <div className="mt-4 h-[4px] w-14 rounded-full bg-[#0d4c8f]" />
-              <p className="mt-6 max-w-xl text-[15px] leading-8 text-[#5e6d89]">
-                We provide end-to-end support for businesses looking to scale
-                their international presence through strategic trade management.
-              </p>
-            </div>
+          <AnimatedContent
+            distance={40}
+            direction="vertical"
+            reverse={false}
+            duration={0.75}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="flex items-start justify-between gap-6">
+              <div>
+                <h2 className="text-[2.3rem] font-bold text-[#16233e]">
+                  Specialized Trading Services
+                </h2>
+                <div className="mt-4 h-[4px] w-14 rounded-full bg-[#0d4c8f]" />
+                <p className="mt-6 max-w-xl text-[15px] leading-8 text-[#5e6d89]">
+                  We provide end-to-end support for businesses looking to scale
+                  their international presence through strategic trade management.
+                </p>
+              </div>
 
-            <div className="flex gap-3 pt-4">
-              <button
-                type="button"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#d9dee6] bg-white text-[#76849a]"
-              >
-                ‹
-              </button>
-              <button
-                type="button"
-                className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#d9dee6] bg-white text-[#76849a]"
-              >
-                ›
-              </button>
+              <div className="rounded-full border border-[#dde4ee] bg-white/80 px-5 py-3 text-[12px] font-semibold uppercase tracking-[0.18em] text-[#6a7890] shadow-[0_8px_20px_rgba(0,0,0,0.03)] backdrop-blur-sm">
+                Four core service pillars
+              </div>
             </div>
-          </div>
+          </AnimatedContent>
 
           <div className="mt-10 grid gap-6 xl:grid-cols-3">
-            {desktopCards.map((card, index) => (
-              <div
+            {desktopCards.map((card) => (
+              <AnimatedContent
                 key={card.id}
-                className={`overflow-hidden rounded-xl border border-[#e6e9ef] bg-white shadow-[0_8px_18px_rgba(0,0,0,0.04)] transition hover:-translate-y-1 ${
-                  index === 3 ? "xl:col-span-1" : ""
-                }`}
+                distance={42}
+                direction="vertical"
+                reverse={false}
+                duration={0.8}
+                ease="power3.out"
+                initialOpacity={0}
+                animateOpacity
+                scale={0.97}
+                threshold={0.15}
               >
-                <div className="relative h-[210px] overflow-hidden">
-                  <Image
-                    src={card.imageSrc}
-                    alt={card.title}
-                    fill
-                    className="object-cover"
-                  />
-
-                  <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.08),rgba(7,27,53,0.35))]" />
-
-                  <div className="absolute left-4 top-4 flex h-11 w-11 items-center justify-center rounded-md bg-[#0d4c8f] text-sm text-white shadow">
-                    {card.icon}
-                  </div>
-                </div>
-
-                <div className="p-5">
-                  <h3 className="text-[1.55rem] font-semibold leading-tight text-[#1a2740]">
-                    {card.title}
-                  </h3>
-
-                  <p className="mt-4 text-[14px] leading-7 text-[#6b7890]">
-                    {card.description}
-                  </p>
-
-                  <button
-                    type="button"
-                    onClick={() => openModal(card.id)}
-                    className="mt-6 inline-block text-[13px] font-semibold text-[#0d4c8f]"
+                <div className="h-full rounded-[30px]">
+                  <SpotlightCard
+                    className="group h-full overflow-hidden rounded-[30px] border border-[#e6e9ef] bg-white shadow-[0_12px_30px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1.5"
+                    spotlightColor="rgba(13,76,143,0.18)"
                   >
-                    Learn More →
-                  </button>
+                    <div className="relative h-[220px] overflow-hidden rounded-[28px]">
+                      <Image
+                        src={card.imageSrc}
+                        alt={card.title}
+                        fill
+                        className="object-cover transition duration-700 group-hover:scale-105"
+                      />
+
+                      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.08),rgba(7,27,53,0.45))]" />
+
+                      <div className="absolute left-5 top-5 flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#0d4c8f] text-sm text-white shadow-[0_10px_24px_rgba(13,76,143,0.22)]">
+                        {card.icon}
+                      </div>
+
+                      <div className="absolute bottom-5 left-5 right-5">
+                        <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.18em] text-white/80 backdrop-blur-sm">
+                          Service capability
+                        </p>
+                      </div>
+                    </div>
+
+                    <div className="p-6">
+                      <h3 className="text-[1.55rem] font-semibold leading-tight text-[#1a2740]">
+                        {card.title}
+                      </h3>
+
+                      <p className="mt-4 text-[14px] leading-7 text-[#6b7890]">
+                        {card.description}
+                      </p>
+
+                      <div className="mt-6 flex items-center justify-between gap-4">
+                        <button
+                          type="button"
+                          onClick={() => openModal(card.id)}
+                          className="rounded-full border border-[#dbe2ec] bg-[#f7f9fc] px-4 py-2.5 text-[13px] font-semibold text-[#0d4c8f] transition duration-300 hover:border-[#bfd0e6] hover:bg-[#eef5fd]"
+                        >
+                          Learn More
+                        </button>
+                      </div>
+                    </div>
+                  </SpotlightCard>
                 </div>
-              </div>
+              </AnimatedContent>
             ))}
 
-            <div className="rounded-xl bg-[#0d4c8f] p-8 text-white shadow-[0_8px_18px_rgba(0,0,0,0.05)]">
-              <div className="flex min-h-[398px] flex-col justify-center">
-                <h3 className="text-[2rem] font-bold leading-tight">
-                  Need a Custom Solution?
-                </h3>
+            <AnimatedContent
+              distance={45}
+              direction="vertical"
+              reverse={false}
+              duration={0.85}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.97}
+              threshold={0.15}
+            >
+              <SpotlightCard
+                className="h-full rounded-[32px] bg-[#0d4c8f] p-8 text-white shadow-[0_16px_40px_rgba(0,0,0,0.08)]"
+                spotlightColor="rgba(255,255,255,0.12)"
+              >
+                <div className="flex min-h-[420px] flex-col justify-between">
+                  <div>
+                    <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/65">
+                      Tailored support
+                    </p>
+                    <h3 className="mt-4 text-[2rem] font-bold leading-tight">
+                      Need a Custom Solution?
+                    </h3>
 
-                <p className="mt-5 max-w-xs text-[15px] leading-8 text-white/80">
-                  Our team can design a bespoke strategy tailored to your
-                  specific industry and market requirements.
-                </p>
+                    <p className="mt-5 max-w-xs text-[15px] leading-8 text-white/80">
+                      Our team can design a bespoke strategy tailored to your
+                      specific industry, shipment profile, and market requirements.
+                    </p>
+                  </div>
 
-                <Link
-                  href="/contact#book-call"
-                  className="mt-8 block w-full rounded-md bg-white px-6 py-3 text-center text-[13px] font-semibold text-[#0d4c8f]"
-                >
-                  Speak with an Expert
-                </Link>
-              </div>
-            </div>
+                  <div className="space-y-4">
+                    <div className="rounded-[24px] border border-white/12 bg-white/10 px-4 py-4 text-[14px] leading-7 text-white/80">
+                      From sourcing strategy to freight coordination, we help
+                      businesses build a smoother international trade workflow.
+                    </div>
+
+                    <div className="flex flex-col gap-3">
+                      <Link
+                        href="/contact#book-call"
+                        className="block w-full rounded-full bg-white px-6 py-3 text-center text-[13px] font-semibold text-[#0d4c8f]"
+                      >
+                        <ShinyText
+                          text="Speak with an Expert"
+                          speed={3}
+                          className="text-[#0d4c8f]"
+                        />
+                      </Link>
+
+                      <Link
+                        href="/contact"
+                        className="block w-full rounded-full border border-white/16 bg-white/10 px-6 py-3 text-center text-[13px] font-semibold text-white"
+                      >
+                        <ShinyText text="Send a Message" speed={3} className="text-white" />
+                      </Link>
+                    </div>
+                  </div>
+                </div>
+              </SpotlightCard>
+            </AnimatedContent>
           </div>
         </section>
 
         <section className="bg-[#eef2f6] py-20">
-          <div className="mx-auto w-[88%] text-center">
-            <h2 className="text-[3rem] font-bold text-[#16233e]">
-              Ready to Expand Your Global Reach?
-            </h2>
+          <div className="mx-auto grid w-[88%] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+            <AnimatedContent
+              distance={40}
+              direction="vertical"
+              reverse={false}
+              duration={0.75}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.98}
+              threshold={0.15}
+            >
+              <div>
+                <h2 className="text-[3rem] font-bold text-[#16233e]">
+                  Ready to Expand Your Global Reach?
+                </h2>
 
-            <p className="mx-auto mt-6 max-w-3xl text-[16px] leading-8 text-[#6a7890]">
-              Contact our experts today for a customized trading and logistics
-              strategy that puts your business at the forefront of international
-              commerce.
-            </p>
+                <p className="mt-6 max-w-2xl text-[16px] leading-8 text-[#6a7890]">
+                  Contact our experts today for a customized trading and logistics
+                  strategy that puts your business at the forefront of
+                  international commerce.
+                </p>
 
-            <div className="mt-10 flex items-center justify-center gap-4">
-              <Link
-                href="/contact#book-call"
-                className="rounded-md bg-[#0d4c8f] px-7 py-3 text-[13px] font-semibold text-white shadow-sm"
-              >
-                Schedule a Consultation
-              </Link>
+                <div className="mt-10 flex flex-wrap items-center gap-4">
+                  <Link
+                    href="/contact#book-call"
+                    className="rounded-full bg-[#0d4c8f] px-7 py-3 text-[13px] font-semibold text-white shadow-[0_10px_24px_rgba(13,76,143,0.20)]"
+                  >
+                    <ShinyText
+                      text="Schedule a Consultation"
+                      speed={3}
+                      className="text-white"
+                    />
+                  </Link>
 
-              <Link
-                href="#"
-                className="rounded-md border border-[#d7dce5] bg-white px-7 py-3 text-[13px] font-semibold text-[#394762]"
-              >
-                View Case Studies
-              </Link>
+                  <Link
+                    href="/contact"
+                    className="rounded-full border border-[#d7dce5] bg-white px-7 py-3 text-[13px] font-semibold text-[#394762]"
+                  >
+                    <ShinyText
+                      text="Contact Our Team"
+                      speed={3}
+                      className="text-[#394762]"
+                    />
+                  </Link>
+                </div>
+              </div>
+            </AnimatedContent>
+
+            <div className="grid gap-4 md:grid-cols-3">
+              {serviceSteps.map((step, index) => (
+                <AnimatedContent
+                  key={step.title}
+                  distance={32 + index * 6}
+                  direction="vertical"
+                  reverse={false}
+                  duration={0.8}
+                  ease="power3.out"
+                  initialOpacity={0}
+                  animateOpacity
+                  scale={0.98}
+                  threshold={0.15}
+                >
+                  <SpotlightCard
+                    className="h-full rounded-[28px] border border-[#e1e7ef] bg-white p-5 shadow-[0_10px_24px_rgba(0,0,0,0.04)]"
+                    spotlightColor="rgba(13,76,143,0.14)"
+                  >
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-[#eff6fe] text-[13px] font-semibold text-[#0d4c8f]">
+                      0{index + 1}
+                    </div>
+                    <h3 className="mt-5 text-[1.2rem] font-semibold text-[#16233e]">
+                      {step.title}
+                    </h3>
+                    <p className="mt-3 text-[14px] leading-7 text-[#64748b]">
+                      {step.description}
+                    </p>
+                  </SpotlightCard>
+                </AnimatedContent>
+              ))}
             </div>
           </div>
         </section>
@@ -260,158 +511,371 @@ export default function ServicesPage() {
       {/* MOBILE */}
       <div className="md:hidden">
         <section className="mx-auto w-[88%] py-6">
-          <div className="relative overflow-hidden rounded-2xl">
-            <div className="relative h-[185px] w-full">
-              <Image
-                src="/images/services/services-hero.png"
-                alt="GlobalFlow Trading mobile services hero"
-                fill
-                className="object-cover"
-                priority
-              />
+          <AnimatedContent
+            distance={35}
+            direction="vertical"
+            reverse={false}
+            duration={0.75}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="relative overflow-hidden rounded-[30px] bg-[#0d4c8f] shadow-[0_12px_30px_rgba(13,76,143,0.18)]">
+              <div className="absolute inset-0">
+                <Image
+                  src="/images/services/services-hero.png"
+                  alt="GlobalFlow Trading mobile services hero"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.15),rgba(7,27,53,0.8))]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_22%,rgba(255,255,255,0.12),transparent_34%)]" />
+              <div className="relative px-5 py-8">
+                <p className="inline-block rounded-full bg-white/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-sm">
+                  Global services
+                </p>
+
+                <div className="mt-4">
+                  <BlurText
+                    text="Trade Support That Moves Faster"
+                    delay={110}
+                    animateBy="words"
+                    direction="top"
+                    className="text-[2rem] font-bold leading-tight text-white"
+                  />
+                </div>
+
+                <p className="mt-3 text-[14px] leading-6 text-white/88">
+                  Empowering global trade through strategic sourcing, shipping,
+                  logistics, and compliance support.
+                </p>
+
+                <div className="mt-6 flex gap-3">
+                  <Link
+                    href="/contact#book-call"
+                    className="rounded-full bg-white px-4 py-3 text-[13px] font-semibold text-[#0d4c8f]"
+                  >
+                    <ShinyText text="Book a Call" speed={3} className="text-[#0d4c8f]" />
+                  </Link>
+                  <Link
+                    href="/contact"
+                    className="rounded-full border border-white/18 bg-white/10 px-4 py-3 text-[13px] font-semibold text-white backdrop-blur-sm"
+                  >
+                    <ShinyText text="Contact" speed={3} className="text-white" />
+                  </Link>
+                </div>
+              </div>
             </div>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.15),rgba(7,27,53,0.75))]" />
-            <div className="absolute bottom-4 left-5 right-5">
-              <h1 className="text-[2rem] font-bold leading-tight text-white">
-                GlobalFlow Trading
-              </h1>
-              <p className="mt-2 text-[14px] leading-6 text-white/90">
-                Empowering global trade through strategic commodities and
-                shipping solutions.
-              </p>
+          </AnimatedContent>
+
+          <AnimatedContent
+            distance={32}
+            direction="vertical"
+            reverse={false}
+            duration={0.78}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="mt-6 grid grid-cols-3 gap-3">
+              {serviceHighlights.map((item) => (
+                <div
+                  key={item.label}
+                  className="rounded-[22px] border border-[#d8e3f0] bg-white px-3 py-4 text-center shadow-[0_8px_20px_rgba(0,0,0,0.03)]"
+                >
+                  <p className="text-[1.2rem] font-semibold text-[#16233e]">
+                    <CountUpValue value={item.value} suffix={item.suffix} />
+                  </p>
+                  <p className="mt-2 text-[11px] uppercase tracking-[0.14em] text-[#6d7c92]">
+                    {item.label}
+                  </p>
+                </div>
+              ))}
             </div>
-          </div>
+          </AnimatedContent>
 
           <section className="mt-8">
-            <h2 className="text-[2rem] font-bold text-[#16233e]">
-              Our Core Services
-            </h2>
-            <p className="mt-1 text-[14px] text-[#66758d]">
-              Comprehensive trade solutions for global businesses.
-            </p>
+            <AnimatedContent
+              distance={30}
+              direction="vertical"
+              reverse={false}
+              duration={0.75}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.98}
+              threshold={0.15}
+            >
+              <h2 className="text-[2rem] font-bold text-[#16233e]">
+                Our Core Services
+              </h2>
+              <p className="mt-1 text-[14px] text-[#66758d]">
+                Comprehensive trade solutions for global businesses.
+              </p>
+            </AnimatedContent>
 
             <div className="mt-5 space-y-4">
-              {mobileCards.map((card) => (
-                <button
+              {mobileCards.map((card, index) => (
+                <AnimatedContent
                   key={card.id}
-                  type="button"
-                  onClick={() => openModal(card.id)}
-                  className="flex w-full items-center gap-4 rounded-2xl border border-[#e5e8ee] bg-white px-4 py-5 text-left shadow-[0_6px_14px_rgba(0,0,0,0.03)]"
+                  distance={32 + index * 4}
+                  direction="vertical"
+                  reverse={false}
+                  duration={0.78}
+                  ease="power3.out"
+                  initialOpacity={0}
+                  animateOpacity
+                  scale={0.98}
+                  threshold={0.15}
                 >
-                  <div className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-xl bg-[#eef2f5]">
-                    {card.imageSrc ? (
-                      <Image
-                        src={card.imageSrc}
-                        alt={card.title}
-                        fill
-                        className="object-contain p-2"
-                      />
-                    ) : (
-                      <span className="text-[1.3rem] text-[#0d4c8f]">
-                        {card.icon}
-                      </span>
-                    )}
-                  </div>
+                  <motion.button
+                    type="button"
+                    onClick={() => openModal(card.id)}
+                    whileHover={{ y: -4, scale: 1.01 }}
+                    whileTap={{ scale: 0.985 }}
+                    transition={{ type: "spring", stiffness: 260, damping: 20 }}
+                    className="flex w-full items-center gap-4 rounded-[28px] border border-[#e5e8ee] bg-white px-4 py-5 text-left shadow-[0_10px_22px_rgba(0,0,0,0.04)]"
+                  >
+                    <div className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-[18px] bg-[#eef2f5]">
+                      {card.imageSrc ? (
+                        <Image
+                          src={card.imageSrc}
+                          alt={card.title}
+                          fill
+                          className="object-contain p-2"
+                        />
+                      ) : (
+                        <span className="text-[1.3rem] text-[#0d4c8f]">
+                          {card.icon}
+                        </span>
+                      )}
+                    </div>
 
-                  <div className="min-w-0 flex-1">
-                    <h3 className="text-[1.05rem] font-semibold leading-snug text-[#182540]">
-                      {card.title}
-                    </h3>
-                    <p className="mt-1 text-[14px] leading-6 text-[#7b889e]">
-                      {card.description}
-                    </p>
-                  </div>
+                    <div className="min-w-0 flex-1">
+                      <h3 className="text-[1.05rem] font-semibold leading-snug text-[#182540]">
+                        {card.title}
+                      </h3>
+                      <p className="mt-1 text-[14px] leading-6 text-[#7b889e]">
+                        {card.description}
+                      </p>
+                    </div>
 
-                  <div className="text-[1.5rem] text-[#8b97ab]">›</div>
-                </button>
+                    <div className="text-[1.5rem] text-[#8b97ab]">›</div>
+                  </motion.button>
+                </AnimatedContent>
               ))}
             </div>
 
-            <div className="mt-6 rounded-3xl bg-[#0d4c8f] px-6 py-8 text-white shadow-sm">
-              <h3 className="text-[2rem] font-bold leading-tight">
-                Need a Custom
-                <br />
-                Solution?
-              </h3>
-
-              <p className="mt-6 text-[15px] leading-8 text-white/80">
-                Our team can design a bespoke strategy tailored to your specific
-                industry and market requirements.
-              </p>
-
-              <Link
-                href="/contact#book-call"
-                className="mt-8 block rounded-2xl bg-white px-5 py-4 text-center text-[15px] font-semibold text-[#0d4c8f]"
+            <AnimatedContent
+              distance={36}
+              direction="vertical"
+              reverse={false}
+              duration={0.8}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.98}
+              threshold={0.15}
+            >
+              <SpotlightCard
+                className="mt-6 rounded-[30px] bg-[#0d4c8f] px-6 py-8 text-white shadow-[0_12px_30px_rgba(13,76,143,0.16)]"
+                spotlightColor="rgba(255,255,255,0.12)"
               >
-                Speak with an Expert
-              </Link>
-            </div>
+                <h3 className="text-[2rem] font-bold leading-tight">
+                  Need a Custom
+                  <br />
+                  Solution?
+                </h3>
+
+                <p className="mt-6 text-[15px] leading-8 text-white/80">
+                  Our team can design a bespoke strategy tailored to your specific
+                  industry and market requirements.
+                </p>
+
+                <div className="mt-8 space-y-3">
+                  <Link
+                    href="/contact#book-call"
+                    className="block rounded-full bg-white px-5 py-4 text-center text-[15px] font-semibold text-[#0d4c8f]"
+                  >
+                    <ShinyText
+                      text="Speak with an Expert"
+                      speed={3}
+                      className="text-[#0d4c8f]"
+                    />
+                  </Link>
+
+                  <Link
+                    href="/contact"
+                    className="block rounded-full border border-white/16 bg-white/10 px-5 py-4 text-center text-[15px] font-semibold text-white"
+                  >
+                    <ShinyText text="Send a Message" speed={3} className="text-white" />
+                  </Link>
+                </div>
+              </SpotlightCard>
+            </AnimatedContent>
           </section>
         </section>
       </div>
 
       {/* MODAL */}
-      {activeCard && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0d1b34]/60 px-4 py-6">
-          <div className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-3xl bg-white shadow-[0_20px_60px_rgba(0,0,0,0.20)]">
-            <button
-              type="button"
-              onClick={closeModal}
-              className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[1.4rem] text-[#22304a]"
+      <AnimatePresence>
+        {activeCard && (
+          <motion.div
+            key={activeCard.id}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.22, ease: "easeOut" }}
+            className="fixed inset-0 z-50 flex items-center justify-center px-4 py-6"
+            onClick={closeModal}
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.25 }}
+              className="absolute inset-0 bg-[#0d1b34]/60 backdrop-blur-[3px]"
+            />
+
+            <motion.div
+              initial={{ opacity: 0, y: 48, scale: 0.94 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 28, scale: 0.96 }}
+              transition={{ type: "spring", stiffness: 220, damping: 24 }}
+              className="relative max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-[34px] bg-white shadow-[0_20px_60px_rgba(0,0,0,0.20)]"
+              onClick={(event) => event.stopPropagation()}
             >
-              ×
-            </button>
+                <motion.button
+                  type="button"
+                  onClick={closeModal}
+                  whileHover={{ scale: 1.06, rotate: 90 }}
+                  whileTap={{ scale: 0.94 }}
+                  transition={{ type: "spring", stiffness: 320, damping: 18 }}
+                  className="absolute right-4 top-4 z-20 flex h-10 w-10 items-center justify-center rounded-full bg-white text-[1.4rem] text-[#22304a] shadow-[0_8px_18px_rgba(0,0,0,0.08)]"
+                >
+                  ×
+                </motion.button>
 
-            <div className="relative h-[240px] overflow-hidden rounded-t-3xl">
-              <Image
-                src={activeCard.imageSrc}
-                alt={activeCard.title}
-                fill
-                className="object-cover"
-              />
+              <div className="relative h-[240px] overflow-hidden rounded-t-[34px]">
+                <motion.div
+                  initial={{ scale: 1.08 }}
+                  animate={{ scale: 1 }}
+                  exit={{ scale: 1.04 }}
+                  transition={{ duration: 0.45, ease: "easeOut" }}
+                  className="absolute inset-0"
+                >
+                  <Image
+                    src={activeCard.imageSrc}
+                    alt={activeCard.title}
+                    fill
+                    className="object-cover"
+                  />
+                </motion.div>
 
-              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.10),rgba(7,27,53,0.45))]" />
+                <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.10),rgba(7,27,53,0.45))]" />
 
-              <div className="absolute left-6 bottom-6">
-                <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-[#0d4c8f] text-white shadow">
-                  {activeCard.icon}
+                <motion.div
+                  initial={{ opacity: 0, y: 18 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: 10 }}
+                  transition={{ delay: 0.1, duration: 0.28, ease: "easeOut" }}
+                  className="absolute left-6 bottom-6"
+                >
+                  <div className="flex h-12 w-12 items-center justify-center rounded-[16px] bg-[#0d4c8f] text-white shadow">
+                    {activeCard.icon}
+                  </div>
+
+                  <h3 className="mt-4 text-[1.9rem] font-bold text-white">
+                    {activeCard.title}
+                  </h3>
+                </motion.div>
+              </div>
+
+              <motion.div
+                initial="hidden"
+                animate="visible"
+                exit="hidden"
+                variants={{
+                  hidden: {},
+                  visible: {
+                    transition: {
+                      staggerChildren: 0.08,
+                      delayChildren: 0.08,
+                    },
+                  },
+                }}
+                className="px-6 py-6 md:px-8 md:py-8"
+              >
+                <motion.p
+                  variants={{
+                    hidden: { opacity: 0, y: 14 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.28, ease: "easeOut" }}
+                  className="text-[15px] leading-7 text-[#5f6f86]"
+                >
+                  {activeCard.description}
+                </motion.p>
+
+                <div className="mt-5 space-y-3">
+                  {activeCard.details.map((item, index) => (
+                    <motion.div
+                      key={item}
+                      variants={{
+                        hidden: { opacity: 0, y: 18, scale: 0.98 },
+                        visible: { opacity: 1, y: 0, scale: 1 },
+                      }}
+                      transition={{
+                        duration: 0.28,
+                        ease: "easeOut",
+                        delay: index * 0.02,
+                      }}
+                      whileHover={{ y: -2 }}
+                      className="rounded-[22px] bg-[#f6f8fb] px-4 py-3 text-[14px] leading-7 text-[#64748b]"
+                    >
+                      {item}
+                    </motion.div>
+                  ))}
                 </div>
 
-                <h3 className="mt-4 text-[1.9rem] font-bold text-white">
-                  {activeCard.title}
-                </h3>
-              </div>
-            </div>
-
-            <div className="px-6 py-6 md:px-8 md:py-8">
-              <p className="text-[15px] leading-7 text-[#5f6f86]">
-                {activeCard.description}
-              </p>
-
-              <div className="mt-5 space-y-3">
-                {activeCard.details.map((item) => (
-                  <div
-                    key={item}
-                    className="rounded-2xl bg-[#f6f8fb] px-4 py-3 text-[14px] leading-7 text-[#64748b]"
-                  >
-                    {item}
-                  </div>
-                ))}
-              </div>
-
-              <div className="mt-8">
-                <Link
-                  href="/contact#book-call"
-                  onClick={closeModal}
-                  className="inline-block rounded-xl bg-[#0d4c8f] px-5 py-3 text-[14px] font-semibold text-white"
+                <motion.div
+                  variants={{
+                    hidden: { opacity: 0, y: 14 },
+                    visible: { opacity: 1, y: 0 },
+                  }}
+                  transition={{ duration: 0.28, ease: "easeOut" }}
+                  className="mt-8 flex flex-wrap gap-3"
                 >
-                  Speak with an Expert
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
+                  <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+                    <Link
+                      href="/contact#book-call"
+                      onClick={closeModal}
+                      className="inline-block rounded-full bg-[#0d4c8f] px-5 py-3 text-[14px] font-semibold text-white"
+                    >
+                      <ShinyText text="Book a Call" speed={3} className="text-white" />
+                    </Link>
+                  </motion.div>
+                  <motion.div whileHover={{ y: -2 }} whileTap={{ scale: 0.98 }}>
+                    <Link
+                      href="/contact"
+                      onClick={closeModal}
+                      className="inline-block rounded-full border border-[#d7dee9] bg-white px-5 py-3 text-[14px] font-semibold text-[#22304a]"
+                    >
+                      <ShinyText text="Contact Us" speed={3} className="text-[#22304a]" />
+                    </Link>
+                  </motion.div>
+                </motion.div>
+              </motion.div>
+              </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </main>
   );
 }
