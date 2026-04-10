@@ -55,6 +55,12 @@ const capabilities = [
 
 const markets = ["North America", "South America", "Europe", "Middle East"];
 
+const compliancePoints = [
+  "Built around compliant import and export coordination",
+  "Focused on transparent communication with every partner",
+  "Structured workflows that reduce avoidable trade friction",
+];
+
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#f3f4f6] pt-20 text-[#13213d]">
@@ -376,6 +382,91 @@ export default function AboutPage() {
               </div>
             </AnimatedContent>
           ))}
+        </div>
+      </section>
+
+      <section className="mx-auto w-[92%] max-w-7xl pb-16 xl:w-[88%]">
+        <div className="grid gap-6 lg:grid-cols-[1.2fr_0.8fr]">
+          <AnimatedContent
+            distance={40}
+            direction="vertical"
+            reverse={false}
+            duration={0.8}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="rounded-[30px] border border-[#e3e8ef] bg-[#eef3f9] p-7 shadow-[0_12px_28px_rgba(0,0,0,0.04)] sm:p-8">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.24em] text-[#6f8099]">
+                Ethical & Compliance-Driven Approach
+              </p>
+
+              <h2 className="mt-4 text-[1.85rem] font-bold text-[#16233e] sm:text-[2.15rem]">
+                Responsible trade practices are part of every workflow.
+              </h2>
+
+              <p className="mt-5 max-w-2xl text-[15px] leading-8 text-[#627089]">
+                We work with a process-minded approach that supports careful
+                documentation, reliable communication, and accountable partner
+                coordination across international trade activity.
+              </p>
+
+              <div className="mt-7 space-y-4">
+                {compliancePoints.map((point) => (
+                  <div
+                    key={point}
+                    className="flex items-start gap-3 rounded-[18px] bg-white px-4 py-4 text-[14px] leading-7 text-[#42516a] shadow-[0_8px_16px_rgba(0,0,0,0.03)]"
+                  >
+                    <span className="mt-1 h-2.5 w-2.5 rounded-full bg-[#0d4c8f]" />
+                    <span>{point}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedContent>
+
+          <AnimatedContent
+            distance={44}
+            direction="vertical"
+            reverse={false}
+            duration={0.85}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="h-full rounded-[30px] border border-[#e4e8ef] bg-white p-7 shadow-[0_12px_28px_rgba(0,0,0,0.04)] sm:p-8">
+              <div className="rounded-[22px] bg-[#123b78] p-5 text-white">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/75">
+                  Integrity in action
+                </p>
+
+                <h3 className="mt-3 text-[1.35rem] font-semibold">
+                  Confidence comes from clear processes.
+                </h3>
+              </div>
+
+              <p className="mt-6 text-[14px] leading-7 text-[#66748c]">
+                From supplier conversations to shipment paperwork, we focus on
+                accurate information, timely updates, and dependable coordination
+                that clients can trust.
+              </p>
+
+              <div className="mt-8 rounded-[24px] border border-[#e5ebf3] bg-[#f8fbff] p-5">
+                <p className="text-[12px] font-semibold uppercase tracking-[0.22em] text-[#6f8099]">
+                  Core standard
+                </p>
+
+                <p className="mt-3 text-[15px] leading-7 text-[#32445f]">
+                  We treat every trading relationship as a long-term partnership,
+                  not a one-time transaction.
+                </p>
+              </div>
+            </div>
+          </AnimatedContent>
         </div>
       </section>
     </main>
