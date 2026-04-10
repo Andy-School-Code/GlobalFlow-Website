@@ -68,13 +68,13 @@ export default function Navbar() {
               </Link>
 
               {/* Desktop nav */}
-              <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 xl:flex">
+              <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-4 whitespace-nowrap 2xl:gap-6 xl:flex">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
 
                   const content = (
                     <motion.span
-                      className={`relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] ${
+                      className={`relative inline-flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-[15px] ${
                         active ? "font-semibold text-white" : "text-white/70"
                       }`}
                       animate={{
