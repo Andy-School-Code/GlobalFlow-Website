@@ -9,7 +9,7 @@ import ShinyText from "@/components/reactbits/ShinyText";
 import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 const navItems = [
-  { label: "Home", href: "/" },
+  { label: "Home", href: "/home" },
   { label: "About Us", href: "#" },
   { label: "Services", href: "/services" },
   { label: "Products", href: "/products" },
@@ -51,7 +51,7 @@ export default function Navbar() {
             <div className="relative flex items-center justify-between gap-2">
               {/* Left brand */}
               <Link
-                href="/"
+                href="/home"
                 className="z-10 flex min-w-0 items-center gap-2 sm:gap-3"
                 onClick={closeMenu}
               >
@@ -158,16 +158,16 @@ export default function Navbar() {
             <div className="mt-3 rounded-3xl border border-white/10 bg-[#060912]/95 p-4 shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl xl:hidden">
               <div className="flex flex-col gap-2 text-sm text-white">
                 <Link
-                  href="/"
+                  href="/home"
                   onClick={closeMenu}
                   className={`rounded-xl px-3 py-2 transition ${
-                    isActive("/")
+                    isActive("/home")
                       ? "bg-white/10 font-semibold text-white ring-1 ring-white/15"
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
                   <span className="inline-flex items-center gap-2">
-                    {isActive("/") && (
+                    {isActive("/home") && (
                       <span className="h-2 w-2 rounded-full bg-emerald-400" />
                     )}
                     Home
