@@ -2,8 +2,12 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+
 import AnimatedContent from "@/components/reactbits/AnimatedContent";
+import BlurText from "@/components/reactbits/BlurText";
 import ShinyText from "@/components/reactbits/ShinyText";
+import FadeContent from "@/components/reactbits/FadeContent";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 type FormMode = "message" | "call";
 
@@ -154,6 +158,7 @@ export default function ContactPage() {
 
   return (
     <main className="bg-[#f3f4f6] pt-20 text-[#13213d]">
+      {/* DESKTOP / TABLET */}
       <div className="hidden md:block">
         <section className="relative overflow-hidden bg-[#0d4c8f]">
           <div className="absolute inset-0">
@@ -169,33 +174,44 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,31,63,0.86),rgba(5,31,63,0.58))]" />
           <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_26%,rgba(255,255,255,0.08),transparent_34%)]" />
           <div className="pointer-events-none absolute right-10 top-10 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+          <div className="pointer-events-none absolute left-[10%] top-1/3 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
 
           <div className="relative mx-auto w-[88%] py-16 lg:py-20">
             <AnimatedContent
-              distance={24}
+              distance={60}
               direction="vertical"
               reverse={false}
-              duration={0.7}
+              duration={0.8}
               ease="power3.out"
               initialOpacity={0}
               animateOpacity
               scale={1}
-              threshold={0.2}
+              threshold={0.15}
             >
               <div className="max-w-2xl">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.25em] text-white/75">
-                  Contact GlobalFlow
-                </p>
+                <FadeContent blur duration={700} easing="ease-out" initialOpacity={0}>
+                  <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/75 backdrop-blur-sm">
+                    Contact GlobalFlow
+                  </p>
+                </FadeContent>
 
-                <h1 className="mt-4 text-5xl font-bold leading-tight text-white lg:text-6xl">
-                  Connect With Our Specialists
-                </h1>
+                <div className="mt-4">
+                  <BlurText
+                    text="Connect With Our Specialists"
+                    delay={120}
+                    animateBy="words"
+                    direction="top"
+                    className="text-5xl font-bold leading-tight text-white lg:text-6xl"
+                  />
+                </div>
 
-                <p className="mt-6 text-[16px] leading-8 text-white/85">
-                  If you are interested in working with GlobalFlow Trading Inc.
-                  or would like more information about our services and
-                  products, please contact us using the form below.
-                </p>
+                <FadeContent blur duration={900} easing="ease-out" initialOpacity={0}>
+                  <p className="mt-6 max-w-xl text-[16px] leading-8 text-white/85">
+                    If you are interested in working with GlobalFlow Trading Inc. or
+                    would like more information about our services and products,
+                    please contact us using the form below.
+                  </p>
+                </FadeContent>
               </div>
             </AnimatedContent>
           </div>
@@ -204,17 +220,21 @@ export default function ContactPage() {
         <section className="mx-auto w-[88%] py-14 lg:py-16">
           <div className="grid gap-8 lg:grid-cols-[1.8fr_0.95fr]">
             <AnimatedContent
-              distance={18}
+              className="h-full"
+              distance={40}
               direction="vertical"
               reverse={false}
-              duration={0.65}
+              duration={0.75}
               ease="power3.out"
               initialOpacity={0}
               animateOpacity
-              scale={1}
+              scale={0.98}
               threshold={0.15}
             >
-              <div className="rounded-2xl border border-[#e5e8ee] bg-white p-8 shadow-[0_8px_18px_rgba(0,0,0,0.04)]">
+              <SpotlightCard
+                className="flex h-full flex-col rounded-[32px] border border-[#e5e8ee] bg-white p-8 shadow-[0_10px_30px_rgba(0,0,0,0.05)]"
+                spotlightColor="rgba(13,76,143,0.14)"
+              >
                 <div className="flex flex-wrap gap-3">
                   <button
                     type="button"
@@ -222,21 +242,16 @@ export default function ContactPage() {
                       setFormMode("message");
                       resetFeedback();
                     }}
-                    className={`rounded-full px-5 py-2.5 text-[13px] font-semibold transition ${
+                    className={`rounded-full px-5 py-2.5 text-[13px] font-semibold transition duration-300 ${
                       formMode === "message"
-                        ? "bg-[#0d4c8f] text-white"
-                        : "border border-[#d8dee8] bg-white text-[#46546d]"
+                        ? "bg-[#0d4c8f] text-white shadow-[0_8px_20px_rgba(13,76,143,0.25)]"
+                        : "border border-[#d8dee8] bg-white text-[#46546d] hover:border-[#bfd0e6] hover:bg-[#f8fbff]"
                     }`}
                   >
                     <ShinyText
                       text="Send a Message"
-                      disabled={false}
                       speed={3}
-                      className={
-                        formMode === "message"
-                          ? "text-[13px] font-semibold text-white"
-                          : "text-[13px] font-semibold text-[#46546d]"
-                      }
+                      className={formMode === "message" ? "text-white" : "text-[#46546d]"}
                     />
                   </button>
 
@@ -250,21 +265,16 @@ export default function ContactPage() {
                         window.history.replaceState(null, "", "/contact#book-call");
                       }
                     }}
-                    className={`rounded-full px-5 py-2.5 text-[13px] font-semibold transition ${
+                    className={`rounded-full px-5 py-2.5 text-[13px] font-semibold transition duration-300 ${
                       formMode === "call"
-                        ? "bg-[#0d4c8f] text-white"
-                        : "border border-[#d8dee8] bg-white text-[#46546d]"
+                        ? "bg-[#0d4c8f] text-white shadow-[0_8px_20px_rgba(13,76,143,0.25)]"
+                        : "border border-[#d8dee8] bg-white text-[#46546d] hover:border-[#bfd0e6] hover:bg-[#f8fbff]"
                     }`}
                   >
                     <ShinyText
                       text="Book a Call"
-                      disabled={false}
                       speed={3}
-                      className={
-                        formMode === "call"
-                          ? "text-[13px] font-semibold text-white"
-                          : "text-[13px] font-semibold text-[#46546d]"
-                      }
+                      className={formMode === "call" ? "text-white" : "text-[#46546d]"}
                     />
                   </button>
                 </div>
@@ -278,303 +288,295 @@ export default function ContactPage() {
 
                   <p className="mt-2 text-[14px] leading-7 text-[#6b7890]">
                     {formMode === "message"
-                      ? "Share your inquiry with our team and we will get back to you as soon as possible."
-                      : "Choose a suitable date and time to discuss your requirements with our experts."}
+                      ? "Tell us about your sourcing, logistics, or import-export needs and our team will direct your inquiry to the right specialist."
+                      : "Choose a convenient time to speak with our team about your sourcing, logistics, or trade requirements."}
                   </p>
                 </div>
 
                 {submitState.success ? (
-                  <div className="mt-6 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-[14px] text-green-700">
+                  <div className="mt-6 rounded-[22px] border border-green-200 bg-green-50 px-4 py-3 text-[14px] text-green-700">
                     {submitState.success}
                   </div>
                 ) : null}
 
                 {submitState.error ? (
-                  <div className="mt-6 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">
+                  <div className="mt-6 rounded-[22px] border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">
                     {submitState.error}
                   </div>
                 ) : null}
 
                 {formMode === "message" ? (
-                  <form className="mt-8 space-y-5" onSubmit={handleMessageSubmit}>
-                    <div className="grid gap-5 md:grid-cols-2">
+                  <form className="mt-8 flex flex-1 flex-col" onSubmit={handleMessageSubmit}>
+                    <div className="space-y-5">
+                      <div className="grid gap-5 md:grid-cols-2">
+                        <div>
+                          <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                            Name
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={messageForm.name}
+                            onChange={(e) =>
+                              setMessageForm((prev) => ({ ...prev, name: e.target.value }))
+                            }
+                            placeholder="Your full name"
+                            className="w-full rounded-[20px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            required
+                            value={messageForm.email}
+                            onChange={(e) =>
+                              setMessageForm((prev) => ({ ...prev, email: e.target.value }))
+                            }
+                            placeholder="email@company.com"
+                            className="w-full rounded-[20px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                          />
+                        </div>
+                      </div>
+
                       <div>
                         <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                          Name
+                          Company Name
                         </label>
                         <input
                           type="text"
-                          required
-                          value={messageForm.name}
+                          value={messageForm.company}
                           onChange={(e) =>
-                            setMessageForm((prev) => ({
-                              ...prev,
-                              name: e.target.value,
-                            }))
+                            setMessageForm((prev) => ({ ...prev, company: e.target.value }))
                           }
-                          placeholder="Your full name"
-                          className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition focus:border-[#0d4c8f]"
+                          placeholder="Your Organization"
+                          className="w-full rounded-[20px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
                         />
                       </div>
 
                       <div>
                         <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                          Email
+                          Message
                         </label>
-                        <input
-                          type="email"
+                        <textarea
+                          rows={6}
                           required
-                          value={messageForm.email}
+                          value={messageForm.message}
                           onChange={(e) =>
-                            setMessageForm((prev) => ({
-                              ...prev,
-                              email: e.target.value,
-                            }))
+                            setMessageForm((prev) => ({ ...prev, message: e.target.value }))
                           }
-                          placeholder="email@company.com"
-                          className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition focus:border-[#0d4c8f]"
+                          placeholder="How can we help you?"
+                          className="w-full rounded-[24px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
                         />
                       </div>
                     </div>
 
-                    <div>
-                      <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                        Company Name
-                      </label>
-                      <input
-                        type="text"
-                        value={messageForm.company}
-                        onChange={(e) =>
-                          setMessageForm((prev) => ({
-                            ...prev,
-                            company: e.target.value,
-                          }))
-                        }
-                        placeholder="Your Organization"
-                        className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition focus:border-[#0d4c8f]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                        Message
-                      </label>
-                      <textarea
-                        rows={6}
-                        required
-                        value={messageForm.message}
-                        onChange={(e) =>
-                          setMessageForm((prev) => ({
-                            ...prev,
-                            message: e.target.value,
-                          }))
-                        }
-                        placeholder="How can we help you?"
-                        className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition focus:border-[#0d4c8f]"
-                      />
-                    </div>
-
-                    <div className="pt-1">
+                    <div className="mt-auto pt-6">
+                      <p className="mb-3 text-[12px] leading-6 text-[#70809a]">
+                        We typically respond within 1 business day and your inquiry is
+                        reviewed by the right GlobalFlow specialist.
+                      </p>
                       <button
                         type="submit"
                         disabled={submitState.loading}
-                        className="rounded-md bg-[#0d4c8f] px-6 py-3 text-[13px] font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="rounded-full bg-[#0d4c8f] px-6 py-3 text-[13px] font-semibold text-white shadow-[0_10px_24px_rgba(13,76,143,0.25)] transition duration-300 hover:-translate-y-0.5 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         <ShinyText
                           text={submitState.loading ? "Sending..." : "Send Inquiry"}
-                          disabled={false}
                           speed={3}
-                          className="text-[13px] font-semibold text-white"
+                          className="text-white"
                         />
                       </button>
                     </div>
                   </form>
                 ) : (
-                  <form className="mt-8 space-y-5" onSubmit={handleCallSubmit}>
-                    <div className="grid gap-5 md:grid-cols-2">
+                  <form className="mt-8 flex flex-1 flex-col" onSubmit={handleCallSubmit}>
+                    <div className="space-y-5">
+                      <div className="grid gap-5 md:grid-cols-2">
+                        <div>
+                          <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                            Name
+                          </label>
+                          <input
+                            type="text"
+                            required
+                            value={callForm.name}
+                            onChange={(e) =>
+                              setCallForm((prev) => ({ ...prev, name: e.target.value }))
+                            }
+                            placeholder="John Doe"
+                            className="w-full rounded-[20px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                            Email
+                          </label>
+                          <input
+                            type="email"
+                            required
+                            value={callForm.email}
+                            onChange={(e) =>
+                              setCallForm((prev) => ({ ...prev, email: e.target.value }))
+                            }
+                            placeholder="email@company.com"
+                            className="w-full rounded-[20px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                          />
+                        </div>
+                      </div>
+
                       <div>
                         <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                          Name
+                          Company Name
                         </label>
                         <input
                           type="text"
-                          required
-                          value={callForm.name}
+                          value={callForm.company}
                           onChange={(e) =>
-                            setCallForm((prev) => ({
-                              ...prev,
-                              name: e.target.value,
-                            }))
+                            setCallForm((prev) => ({ ...prev, company: e.target.value }))
                           }
-                          placeholder="John Doe"
-                          className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition focus:border-[#0d4c8f]"
+                          placeholder="Your Organization"
+                          className="w-full rounded-[20px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
                         />
                       </div>
 
                       <div>
                         <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                          Email
+                          Reason for Booking
                         </label>
-                        <input
-                          type="email"
+                        <textarea
+                          rows={4}
                           required
-                          value={callForm.email}
+                          value={callForm.reason}
                           onChange={(e) =>
-                            setCallForm((prev) => ({
-                              ...prev,
-                              email: e.target.value,
-                            }))
+                            setCallForm((prev) => ({ ...prev, reason: e.target.value }))
                           }
-                          placeholder="email@company.com"
-                          className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition focus:border-[#0d4c8f]"
-                        />
-                      </div>
-                    </div>
-
-                    <div>
-                      <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                        Company Name
-                      </label>
-                      <input
-                        type="text"
-                        value={callForm.company}
-                        onChange={(e) =>
-                          setCallForm((prev) => ({
-                            ...prev,
-                            company: e.target.value,
-                          }))
-                        }
-                        placeholder="Your Organization"
-                        className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition focus:border-[#0d4c8f]"
-                      />
-                    </div>
-
-                    <div>
-                      <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                        Reason for Booking
-                      </label>
-                      <textarea
-                        rows={4}
-                        required
-                        value={callForm.reason}
-                        onChange={(e) =>
-                          setCallForm((prev) => ({
-                            ...prev,
-                            reason: e.target.value,
-                          }))
-                        }
-                        placeholder="Tell us the purpose of the meeting"
-                        className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition focus:border-[#0d4c8f]"
-                      />
-                    </div>
-
-                    <div className="grid gap-5 md:grid-cols-2">
-                      <div>
-                        <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                          Preferred Date
-                        </label>
-                        <input
-                          type="date"
-                          required
-                          value={callForm.preferredDate}
-                          onChange={(e) =>
-                            setCallForm((prev) => ({
-                              ...prev,
-                              preferredDate: e.target.value,
-                            }))
-                          }
-                          className="h-[54px] w-full rounded-lg border border-[#dbe1ea] bg-white px-4 text-[14px] text-[#1b2943] outline-none transition focus:border-[#0d4c8f] appearance-none [&::-webkit-datetime-edit]:text-[#1b2943]"
+                          placeholder="Tell us the purpose of the meeting"
+                          className="w-full rounded-[24px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
                         />
                       </div>
 
-                      <div>
-                        <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                          Preferred Time
-                        </label>
-                        <select
-                          value={callForm.preferredTime}
-                          onChange={(e) =>
-                            setCallForm((prev) => ({
-                              ...prev,
-                              preferredTime: e.target.value,
-                            }))
-                          }
-                          className="h-[54px] w-full rounded-lg border border-[#dbe1ea] bg-white px-4 text-[14px] text-[#1b2943] outline-none transition focus:border-[#0d4c8f]"
-                        >
-                          <option>9:00 AM</option>
-                          <option>11:00 AM</option>
-                          <option>1:00 PM</option>
-                          <option>3:00 PM</option>
-                          <option>5:00 PM</option>
-                        </select>
+                      <div className="grid gap-5 md:grid-cols-2">
+                        <div>
+                          <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                            Preferred Date
+                          </label>
+                          <input
+                            type="date"
+                            required
+                            value={callForm.preferredDate}
+                            onChange={(e) =>
+                              setCallForm((prev) => ({
+                                ...prev,
+                                preferredDate: e.target.value,
+                              }))
+                            }
+                            className="w-full rounded-[20px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                            Preferred Time
+                          </label>
+                          <select
+                            value={callForm.preferredTime}
+                            onChange={(e) =>
+                              setCallForm((prev) => ({
+                                ...prev,
+                                preferredTime: e.target.value,
+                              }))
+                            }
+                            className="w-full rounded-[20px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                          >
+                            <option>9:00 AM</option>
+                            <option>11:00 AM</option>
+                            <option>1:00 PM</option>
+                            <option>3:00 PM</option>
+                            <option>5:00 PM</option>
+                          </select>
+                        </div>
                       </div>
                     </div>
 
-                    <div className="pt-1">
+                    <div className="mt-auto pt-6">
+                      <p className="mb-3 text-[12px] leading-6 text-[#70809a]">
+                        We usually confirm consultation requests within 1 business day
+                        so your meeting can be scheduled without delay.
+                      </p>
                       <button
                         type="submit"
                         disabled={submitState.loading}
-                        className="rounded-md bg-[#0d4c8f] px-6 py-3 text-[13px] font-semibold text-white shadow-sm transition hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-60"
+                        className="rounded-full bg-[#0d4c8f] px-6 py-3 text-[13px] font-semibold text-white shadow-[0_10px_24px_rgba(13,76,143,0.25)] transition duration-300 hover:-translate-y-0.5 hover:opacity-95 disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         <ShinyText
                           text={submitState.loading ? "Submitting..." : "Schedule Call"}
-                          disabled={false}
                           speed={3}
-                          className="text-[13px] font-semibold text-white"
+                          className="text-white"
                         />
                       </button>
                     </div>
                   </form>
                 )}
-              </div>
+              </SpotlightCard>
             </AnimatedContent>
 
-            <div className="space-y-6">
+            <aside className="space-y-6">
               <AnimatedContent
-                distance={16}
+                distance={35}
                 direction="vertical"
                 reverse={false}
-                duration={0.6}
+                duration={0.75}
                 ease="power3.out"
                 initialOpacity={0}
                 animateOpacity
-                scale={1}
-                threshold={0.2}
+                scale={0.98}
+                threshold={0.15}
               >
-                <div className="rounded-2xl border border-[#e5e8ee] bg-[#eef4fb] p-6 shadow-[0_8px_18px_rgba(0,0,0,0.03)]">
+                <SpotlightCard
+                  className="rounded-[30px] border border-[#d7e4f4] bg-[linear-gradient(180deg,#f3f8ff_0%,#e8f1fb_100%)] p-6 shadow-[0_12px_28px_rgba(13,76,143,0.08)]"
+                  spotlightColor="rgba(13,76,143,0.12)"
+                >
                   <div className="flex items-start gap-4">
-                    <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0d4c8f] text-white">
+                    <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-[#0d4c8f] text-white shadow-[0_10px_20px_rgba(13,76,143,0.18)]">
                       ◔
                     </div>
 
                     <div>
-                      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#4d6384]">
+                      <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-[#5a7090]">
                         Efficiency
                       </p>
                       <h3 className="mt-1 text-[1.2rem] font-semibold text-[#16233e]">
                         Response Time
                       </h3>
-                      <p className="mt-3 text-[14px] leading-7 text-[#61718c]">
-                        Our global desk operates 24/5. Most inquiries are
-                        reviewed and assigned quickly.
+                      <p className="mt-3 text-[14px] leading-7 text-[#556884]">
+                        We review inquiries promptly and connect each request with
+                        the right GlobalFlow contact for faster follow-up.
                       </p>
                     </div>
                   </div>
-                </div>
+                </SpotlightCard>
               </AnimatedContent>
 
               <AnimatedContent
-                distance={16}
+                distance={40}
                 direction="vertical"
                 reverse={false}
-                duration={0.6}
+                duration={0.8}
                 ease="power3.out"
                 initialOpacity={0}
                 animateOpacity
-                scale={1}
-                threshold={0.2}
+                scale={0.98}
+                threshold={0.15}
               >
-                <div className="rounded-2xl border border-[#e5e8ee] bg-white p-6 shadow-[0_8px_18px_rgba(0,0,0,0.03)]">
+                <SpotlightCard
+                  className="rounded-[30px] border border-[#e8edf4] bg-white p-6 shadow-[0_6px_14px_rgba(0,0,0,0.03)]"
+                  spotlightColor="rgba(13,76,143,0.12)"
+                >
                   <h3 className="border-l-[3px] border-[#0d4c8f] pl-3 text-[1.1rem] font-semibold text-[#16233e]">
                     Contact Information
                   </h3>
@@ -598,35 +600,35 @@ export default function ContactPage() {
                       </p>
                     </div>
                   </div>
-                </div>
+                </SpotlightCard>
               </AnimatedContent>
 
               <AnimatedContent
-                distance={16}
+                distance={45}
                 direction="vertical"
                 reverse={false}
-                duration={0.6}
+                duration={0.85}
                 ease="power3.out"
                 initialOpacity={0}
                 animateOpacity
-                scale={1}
-                threshold={0.2}
+                scale={0.98}
+                threshold={0.15}
               >
                 <a
                   href={OFFICE_MAP_LINK}
                   target="_blank"
                   rel="noreferrer"
-                  className="block overflow-hidden rounded-2xl border border-[#e5e8ee] bg-white shadow-[0_8px_18px_rgba(0,0,0,0.03)] transition hover:-translate-y-1"
+                  className="group block overflow-hidden rounded-[30px] border border-[#e5e8ee] bg-white shadow-[0_8px_18px_rgba(0,0,0,0.03)] transition duration-300 hover:-translate-y-1"
                 >
-                  <div className="relative h-[240px]">
+                  <div className="relative h-[240px] overflow-hidden rounded-t-[30px]">
                     <Image
                       src="/images/contact/contact-office.jpg"
                       alt="GlobalFlow Trading office location"
                       fill
-                      className="object-cover"
+                      className="object-cover transition duration-500 group-hover:scale-105"
                     />
                     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.08),rgba(7,27,53,0.35))]" />
-                    <div className="absolute left-4 top-4 rounded-lg bg-white/90 px-3 py-2 text-[12px] font-medium text-[#23324d] shadow-sm backdrop-blur">
+                    <div className="absolute left-4 top-4 rounded-full bg-white/90 px-3 py-2 text-[12px] font-medium text-[#23324d] shadow-sm backdrop-blur">
                       1385 Midland Ave, Toronto
                     </div>
                   </div>
@@ -641,368 +643,347 @@ export default function ContactPage() {
                       </p>
                     </div>
 
-                    <ShinyText
-                      text="Open Map"
-                      disabled={false}
-                      speed={3}
-                      className="text-[12px] font-semibold text-[#0d4c8f]"
-                    />
+                    <span className="text-[12px] font-semibold text-[#0d4c8f]">
+                      <ShinyText text="Open Map" speed={3} className="text-[#0d4c8f]" />
+                    </span>
                   </div>
                 </a>
               </AnimatedContent>
-            </div>
+            </aside>
           </div>
         </section>
       </div>
 
+      {/* MOBILE */}
       <div className="md:hidden">
         <section className="mx-auto w-[88%] py-6">
-          <div className="relative overflow-hidden rounded-2xl bg-[#0d4c8f]">
-            <div className="absolute inset-0">
-              <Image
-                src="/images/contact/contact-mobile-hero.jpg"
-                alt="GlobalFlow contact mobile hero"
-                fill
-                className="object-cover"
-                priority
-              />
-            </div>
-            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.18),rgba(7,27,53,0.72))]" />
-
-            <AnimatedContent
-              distance={20}
-              direction="vertical"
-              reverse={false}
-              duration={0.7}
-              ease="power3.out"
-              initialOpacity={0}
-              animateOpacity
-              scale={1}
-              threshold={0.2}
-            >
+          <AnimatedContent
+            distance={35}
+            direction="vertical"
+            reverse={false}
+            duration={0.75}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="relative overflow-hidden rounded-[28px] bg-[#0d4c8f] shadow-[0_12px_30px_rgba(13,76,143,0.18)]">
+              <div className="absolute inset-0">
+                <Image
+                  src="/images/contact/contact-mobile-hero.jpg"
+                  alt="GlobalFlow contact mobile hero"
+                  fill
+                  className="object-cover"
+                  priority
+                />
+              </div>
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.18),rgba(7,27,53,0.72))]" />
               <div className="relative px-5 py-8">
-                <p className="inline-block rounded-md bg-white/15 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-white">
+                <p className="inline-block rounded-full bg-white/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-sm">
                   Support
                 </p>
 
-                <h1 className="mt-4 text-[2rem] font-bold leading-tight text-white">
-                  Get In Touch
-                </h1>
+                <div className="mt-4">
+                  <BlurText
+                    text="Get In Touch"
+                    delay={110}
+                    animateBy="words"
+                    direction="top"
+                    className="text-[2rem] font-bold leading-tight text-white"
+                  />
+                </div>
 
                 <p className="mt-3 text-[14px] leading-6 text-white/85">
                   Interested in working with GlobalFlow Trading Inc.? Contact us
                   below.
                 </p>
               </div>
-            </AnimatedContent>
-          </div>
-
-          <section className="mt-6 rounded-2xl border border-[#e5e8ee] bg-white p-5 shadow-[0_6px_14px_rgba(0,0,0,0.03)]">
-            <div className="flex flex-wrap gap-3">
-              <button
-                type="button"
-                onClick={() => {
-                  setFormMode("message");
-                  resetFeedback();
-                }}
-                className={`rounded-full px-4 py-2 text-[12px] font-semibold ${
-                  formMode === "message"
-                    ? "bg-[#0d4c8f] text-white"
-                    : "border border-[#d8dee8] bg-white text-[#46546d]"
-                }`}
-              >
-                <ShinyText
-                  text="Message"
-                  disabled={false}
-                  speed={3}
-                  className={
-                    formMode === "message"
-                      ? "text-[12px] font-semibold text-white"
-                      : "text-[12px] font-semibold text-[#46546d]"
-                  }
-                />
-              </button>
-
-              <button
-                type="button"
-                onClick={() => {
-                  setFormMode("call");
-                  resetFeedback();
-                  if (typeof window !== "undefined") {
-                    window.history.replaceState(null, "", "/contact#book-call");
-                  }
-                }}
-                className={`rounded-full px-4 py-2 text-[12px] font-semibold ${
-                  formMode === "call"
-                    ? "bg-[#0d4c8f] text-white"
-                    : "border border-[#d8dee8] bg-white text-[#46546d]"
-                }`}
-              >
-                <ShinyText
-                  text="Book a Call"
-                  disabled={false}
-                  speed={3}
-                  className={
-                    formMode === "call"
-                      ? "text-[12px] font-semibold text-white"
-                      : "text-[12px] font-semibold text-[#46546d]"
-                  }
-                />
-              </button>
             </div>
+          </AnimatedContent>
 
-            {submitState.success ? (
-              <div className="mt-4 rounded-xl border border-green-200 bg-green-50 px-4 py-3 text-[14px] text-green-700">
-                {submitState.success}
-              </div>
-            ) : null}
-
-            {submitState.error ? (
-              <div className="mt-4 rounded-xl border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">
-                {submitState.error}
-              </div>
-            ) : null}
-
-            {formMode === "message" ? (
-              <form className="mt-6 space-y-4" onSubmit={handleMessageSubmit}>
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={messageForm.name}
-                    onChange={(e) =>
-                      setMessageForm((prev) => ({
-                        ...prev,
-                        name: e.target.value,
-                      }))
-                    }
-                    placeholder="John Doe"
-                    className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={messageForm.email}
-                    onChange={(e) =>
-                      setMessageForm((prev) => ({
-                        ...prev,
-                        email: e.target.value,
-                      }))
-                    }
-                    placeholder="john@globalflow.com"
-                    className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Company Name
-                  </label>
-                  <input
-                    type="text"
-                    value={messageForm.company}
-                    onChange={(e) =>
-                      setMessageForm((prev) => ({
-                        ...prev,
-                        company: e.target.value,
-                      }))
-                    }
-                    placeholder="Your Company"
-                    className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none"
-                  />
-                </div>
-
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Message
-                  </label>
-                  <textarea
-                    rows={5}
-                    required
-                    value={messageForm.message}
-                    onChange={(e) =>
-                      setMessageForm((prev) => ({
-                        ...prev,
-                        message: e.target.value,
-                      }))
-                    }
-                    placeholder="How can we help you today?"
-                    className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none"
-                  />
-                </div>
-
+          <AnimatedContent
+            distance={35}
+            direction="vertical"
+            reverse={false}
+            duration={0.8}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="mt-6 rounded-[28px] border border-[#e5e8ee] bg-white p-5 shadow-[0_6px_14px_rgba(0,0,0,0.03)]">
+              <div className="flex flex-wrap gap-3">
                 <button
-                  type="submit"
-                  disabled={submitState.loading}
-                  className="w-full rounded-lg bg-[#0d4c8f] px-5 py-3 text-[13px] font-semibold text-white disabled:opacity-60"
+                  type="button"
+                  onClick={() => {
+                    setFormMode("message");
+                    resetFeedback();
+                  }}
+                  className={`rounded-full px-4 py-2 text-[12px] font-semibold transition duration-300 ${
+                    formMode === "message"
+                      ? "bg-[#0d4c8f] text-white shadow-[0_8px_20px_rgba(13,76,143,0.2)]"
+                      : "border border-[#d8dee8] bg-white text-[#46546d]"
+                  }`}
                 >
                   <ShinyText
-                    text={submitState.loading ? "Sending..." : "Send Message"}
-                    disabled={false}
+                    text="Message"
                     speed={3}
-                    className="text-[13px] font-semibold text-white"
+                    className={formMode === "message" ? "text-white" : "text-[#46546d]"}
                   />
                 </button>
-              </form>
-            ) : (
-              <form className="mt-6 space-y-4" onSubmit={handleCallSubmit}>
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Name
-                  </label>
-                  <input
-                    type="text"
-                    required
-                    value={callForm.name}
-                    onChange={(e) =>
-                      setCallForm((prev) => ({
-                        ...prev,
-                        name: e.target.value,
-                      }))
-                    }
-                    placeholder="John Doe"
-                    className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none"
-                  />
-                </div>
 
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Email Address
-                  </label>
-                  <input
-                    type="email"
-                    required
-                    value={callForm.email}
-                    onChange={(e) =>
-                      setCallForm((prev) => ({
-                        ...prev,
-                        email: e.target.value,
-                      }))
+                <button
+                  type="button"
+                  onClick={() => {
+                    setFormMode("call");
+                    resetFeedback();
+                    if (typeof window !== "undefined") {
+                      window.history.replaceState(null, "", "/contact#book-call");
                     }
-                    placeholder="john@globalflow.com"
-                    className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none"
+                  }}
+                  className={`rounded-full px-4 py-2 text-[12px] font-semibold transition duration-300 ${
+                    formMode === "call"
+                      ? "bg-[#0d4c8f] text-white shadow-[0_8px_20px_rgba(13,76,143,0.2)]"
+                      : "border border-[#d8dee8] bg-white text-[#46546d]"
+                  }`}
+                >
+                  <ShinyText
+                    text="Book a Call"
+                    speed={3}
+                    className={formMode === "call" ? "text-white" : "text-[#46546d]"}
                   />
-                </div>
+                </button>
+              </div>
 
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Company Name
-                  </label>
-                  <input
-                    type="text"
-                    value={callForm.company}
-                    onChange={(e) =>
-                      setCallForm((prev) => ({
-                        ...prev,
-                        company: e.target.value,
-                      }))
-                    }
-                    placeholder="Your Company"
-                    className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none"
-                  />
+              {submitState.success ? (
+                <div className="mt-4 rounded-[20px] border border-green-200 bg-green-50 px-4 py-3 text-[14px] text-green-700">
+                  {submitState.success}
                 </div>
+              ) : null}
 
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Reason for Booking
-                  </label>
-                  <textarea
-                    rows={4}
-                    required
-                    value={callForm.reason}
-                    onChange={(e) =>
-                      setCallForm((prev) => ({
-                        ...prev,
-                        reason: e.target.value,
-                      }))
-                    }
-                    placeholder="Reason for booking"
-                    className="w-full rounded-lg border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none"
-                  />
+              {submitState.error ? (
+                <div className="mt-4 rounded-[20px] border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">
+                  {submitState.error}
                 </div>
+              ) : null}
 
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Preferred Date
-                  </label>
-                  <input
-                    type="date"
-                    required
-                    value={callForm.preferredDate}
-                    onChange={(e) =>
-                      setCallForm((prev) => ({
-                        ...prev,
-                        preferredDate: e.target.value,
-                      }))
-                    }
-                    className="h-[52px] w-full rounded-lg border border-[#dbe1ea] bg-white px-4 text-[14px] text-[#1b2943] outline-none appearance-none [&::-webkit-datetime-edit]:text-[#1b2943]"
-                  />
-                </div>
+              {formMode === "message" ? (
+                <form className="mt-6 space-y-4" onSubmit={handleMessageSubmit}>
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={messageForm.name}
+                      onChange={(e) =>
+                        setMessageForm((prev) => ({ ...prev, name: e.target.value }))
+                      }
+                      placeholder="John Doe"
+                      className="w-full rounded-[18px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
 
-                <div>
-                  <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
-                    Preferred Time
-                  </label>
-                  <select
-                    value={callForm.preferredTime}
-                    onChange={(e) =>
-                      setCallForm((prev) => ({
-                        ...prev,
-                        preferredTime: e.target.value,
-                      }))
-                    }
-                    className="h-[52px] w-full rounded-lg border border-[#dbe1ea] bg-white px-4 text-[14px] text-[#1b2943] outline-none"
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={messageForm.email}
+                      onChange={(e) =>
+                        setMessageForm((prev) => ({ ...prev, email: e.target.value }))
+                      }
+                      placeholder="john@globalflow.com"
+                      className="w-full rounded-[18px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Company Name
+                    </label>
+                    <input
+                      type="text"
+                      value={messageForm.company}
+                      onChange={(e) =>
+                        setMessageForm((prev) => ({ ...prev, company: e.target.value }))
+                      }
+                      placeholder="Your Company"
+                      className="w-full rounded-[18px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Message
+                    </label>
+                    <textarea
+                      rows={5}
+                      required
+                      value={messageForm.message}
+                      onChange={(e) =>
+                        setMessageForm((prev) => ({ ...prev, message: e.target.value }))
+                      }
+                      placeholder="How can we help you today?"
+                      className="w-full rounded-[22px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submitState.loading}
+                    className="w-full rounded-full bg-[#0d4c8f] px-5 py-3 text-[13px] font-semibold text-white shadow-[0_10px_24px_rgba(13,76,143,0.25)] transition duration-300 disabled:opacity-60"
                   >
-                    <option>9:00 AM</option>
-                    <option>11:00 AM</option>
-                    <option>1:00 PM</option>
-                    <option>3:00 PM</option>
-                    <option>5:00 PM</option>
-                  </select>
-                </div>
+                    <ShinyText
+                      text={submitState.loading ? "Sending..." : "Send Message"}
+                      speed={3}
+                      className="text-white"
+                    />
+                  </button>
+                </form>
+              ) : (
+                <form className="mt-6 space-y-4" onSubmit={handleCallSubmit}>
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Name
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      value={callForm.name}
+                      onChange={(e) =>
+                        setCallForm((prev) => ({ ...prev, name: e.target.value }))
+                      }
+                      placeholder="John Doe"
+                      className="w-full rounded-[18px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
 
-                <button
-                  type="submit"
-                  disabled={submitState.loading}
-                  className="w-full rounded-lg bg-[#0d4c8f] px-5 py-3 text-[13px] font-semibold text-white disabled:opacity-60"
-                >
-                  <ShinyText
-                    text={submitState.loading ? "Submitting..." : "Schedule Call"}
-                    disabled={false}
-                    speed={3}
-                    className="text-[13px] font-semibold text-white"
-                  />
-                </button>
-              </form>
-            )}
-          </section>
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Email Address
+                    </label>
+                    <input
+                      type="email"
+                      required
+                      value={callForm.email}
+                      onChange={(e) =>
+                        setCallForm((prev) => ({ ...prev, email: e.target.value }))
+                      }
+                      placeholder="john@globalflow.com"
+                      className="w-full rounded-[18px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Company Name
+                    </label>
+                    <input
+                      type="text"
+                      value={callForm.company}
+                      onChange={(e) =>
+                        setCallForm((prev) => ({ ...prev, company: e.target.value }))
+                      }
+                      placeholder="Your Company"
+                      className="w-full rounded-[18px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Reason for Booking
+                    </label>
+                    <textarea
+                      rows={4}
+                      required
+                      value={callForm.reason}
+                      onChange={(e) =>
+                        setCallForm((prev) => ({ ...prev, reason: e.target.value }))
+                      }
+                      placeholder="Reason for booking"
+                      className="w-full rounded-[22px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Preferred Date
+                    </label>
+                    <input
+                      type="date"
+                      required
+                      value={callForm.preferredDate}
+                      onChange={(e) =>
+                        setCallForm((prev) => ({
+                          ...prev,
+                          preferredDate: e.target.value,
+                        }))
+                      }
+                      className="w-full rounded-[18px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="mb-2 block text-[13px] font-medium text-[#23324d]">
+                      Preferred Time
+                    </label>
+                    <select
+                      value={callForm.preferredTime}
+                      onChange={(e) =>
+                        setCallForm((prev) => ({
+                          ...prev,
+                          preferredTime: e.target.value,
+                        }))
+                      }
+                      className="w-full rounded-[18px] border border-[#dbe1ea] bg-white px-4 py-3 text-[14px] outline-none transition duration-300 focus:border-[#0d4c8f] focus:shadow-[0_0_0_4px_rgba(13,76,143,0.08)]"
+                    >
+                      <option>9:00 AM</option>
+                      <option>11:00 AM</option>
+                      <option>1:00 PM</option>
+                      <option>3:00 PM</option>
+                      <option>5:00 PM</option>
+                    </select>
+                  </div>
+
+                  <button
+                    type="submit"
+                    disabled={submitState.loading}
+                    className="w-full rounded-full bg-[#0d4c8f] px-5 py-3 text-[13px] font-semibold text-white shadow-[0_10px_24px_rgba(13,76,143,0.25)] transition duration-300 disabled:opacity-60"
+                  >
+                    <ShinyText
+                      text={submitState.loading ? "Submitting..." : "Schedule Call"}
+                      speed={3}
+                      className="text-white"
+                    />
+                  </button>
+                </form>
+              )}
+            </div>
+          </AnimatedContent>
 
           <section className="mt-6 space-y-4">
             <AnimatedContent
-              distance={16}
+              distance={35}
               direction="vertical"
               reverse={false}
-              duration={0.6}
+              duration={0.8}
               ease="power3.out"
               initialOpacity={0}
               animateOpacity
-              scale={1}
-              threshold={0.2}
+              scale={0.98}
+              threshold={0.15}
             >
               <a
                 href={OFFICE_MAP_LINK}
                 target="_blank"
                 rel="noreferrer"
-                className="block overflow-hidden rounded-2xl border border-[#e5e8ee] bg-white shadow-[0_6px_14px_rgba(0,0,0,0.03)]"
+                className="block overflow-hidden rounded-[28px] border border-[#e5e8ee] bg-white shadow-[0_6px_14px_rgba(0,0,0,0.03)]"
               >
                 <div className="relative h-[170px]">
                   <Image
@@ -1012,7 +993,7 @@ export default function ContactPage() {
                     className="object-cover"
                   />
                   <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.08),rgba(7,27,53,0.35))]" />
-                  <div className="absolute inset-x-4 bottom-4 rounded-xl bg-white/92 px-4 py-3 shadow-sm backdrop-blur">
+                  <div className="absolute inset-x-4 bottom-4 rounded-[20px] bg-white/92 px-4 py-3 shadow-sm backdrop-blur">
                     <p className="text-[13px] font-semibold text-[#23324d]">
                       Toronto Office
                     </p>
@@ -1024,23 +1005,47 @@ export default function ContactPage() {
               </a>
             </AnimatedContent>
 
-            <div className="rounded-2xl border border-[#e5e8ee] bg-white p-4 shadow-[0_6px_14px_rgba(0,0,0,0.03)]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#62718a]">
-                Email Us
-              </p>
-              <p className="mt-1 text-[14px] text-[#23324d]">
-                info@globalflowtrading.com
-              </p>
-            </div>
+            <AnimatedContent
+              distance={28}
+              direction="vertical"
+              reverse={false}
+              duration={0.75}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.98}
+              threshold={0.15}
+            >
+              <div className="rounded-[24px] border border-[#e5e8ee] bg-white p-4 shadow-[0_6px_14px_rgba(0,0,0,0.03)]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#62718a]">
+                  Email Us
+                </p>
+                <p className="mt-1 text-[14px] text-[#23324d]">
+                  info@globalflowtrading.com
+                </p>
+              </div>
+            </AnimatedContent>
 
-            <div className="rounded-2xl border border-[#e5e8ee] bg-white p-4 shadow-[0_6px_14px_rgba(0,0,0,0.03)]">
-              <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#62718a]">
-                Call Us
-              </p>
-              <p className="mt-1 text-[14px] text-[#23324d]">
-                +1 (416) 254-0593
-              </p>
-            </div>
+            <AnimatedContent
+              distance={28}
+              direction="vertical"
+              reverse={false}
+              duration={0.8}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.98}
+              threshold={0.15}
+            >
+              <div className="rounded-[24px] border border-[#e5e8ee] bg-white p-4 shadow-[0_6px_14px_rgba(0,0,0,0.03)]">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#62718a]">
+                  Call Us
+                </p>
+                <p className="mt-1 text-[14px] text-[#23324d]">
+                  +1 (416) 254-0593
+                </p>
+              </div>
+            </AnimatedContent>
           </section>
         </section>
       </div>
