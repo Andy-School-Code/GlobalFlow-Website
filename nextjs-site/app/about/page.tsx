@@ -4,7 +4,14 @@ import Image from "next/image";
 
 import AnimatedContent from "@/components/reactbits/AnimatedContent";
 import BlurText from "@/components/reactbits/BlurText";
+import CountUp from "@/components/reactbits/CountUp";
 import FadeContent from "@/components/reactbits/FadeContent";
+
+const companyStats = [
+  { value: 25, suffix: "+", label: "Trusted supplier relationships" },
+  { value: 80, suffix: "+", label: "Trade projects supported" },
+  { value: 2.4, suffix: "K", label: "Documents coordinated" },
+];
 
 export default function AboutPage() {
   return (
@@ -65,6 +72,89 @@ export default function AboutPage() {
               </AnimatedContent>
             </div>
           </div>
+        </div>
+      </section>
+
+      <section className="mx-auto w-[92%] max-w-7xl py-10 sm:py-12 xl:w-[88%]">
+        <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+          <AnimatedContent
+            distance={40}
+            direction="vertical"
+            reverse={false}
+            duration={0.75}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="rounded-[30px] border border-[#e4e8ef] bg-white p-7 shadow-[0_10px_30px_rgba(0,0,0,0.04)] sm:p-8">
+              <p className="text-[12px] font-semibold uppercase tracking-[0.24em] text-[#6f8099]">
+                Company Overview
+              </p>
+
+              <h2 className="mt-4 text-[1.9rem] font-bold leading-tight text-[#16233e] sm:text-[2.2rem]">
+                Trade support built on trust, clarity, and follow-through.
+              </h2>
+
+              <p className="mt-5 max-w-2xl text-[15px] leading-8 text-[#627089]">
+                GlobalFlow Trading Inc. helps businesses manage sourcing,
+                documentation, shipment coordination, and global trade workflows
+                with a practical approach that keeps every stage easier to handle.
+              </p>
+
+              <div className="mt-8 grid gap-5 sm:grid-cols-3">
+                {companyStats.map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="rounded-[22px] border border-[#e8edf4] bg-[#f8fbff] px-4 py-5"
+                  >
+                    <div className="text-3xl font-bold text-[#0d4c8f]">
+                      <CountUp to={stat.value} duration={1.8} />
+                      <span>{stat.suffix}</span>
+                    </div>
+
+                    <p className="mt-2 text-[13px] leading-6 text-[#6b7890]">
+                      {stat.label}
+                    </p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </AnimatedContent>
+
+          <AnimatedContent
+            distance={44}
+            direction="vertical"
+            reverse={false}
+            duration={0.8}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            scale={0.98}
+            threshold={0.15}
+          >
+            <div className="relative min-h-[320px] overflow-hidden rounded-[30px] border border-[#e4e8ef] bg-white shadow-[0_10px_30px_rgba(0,0,0,0.04)]">
+              <Image
+                src="/images/aboutus/Handshake.jpg"
+                alt="Handshake between business partners"
+                fill
+                className="object-cover"
+              />
+
+              <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(9,31,59,0.08),rgba(9,31,59,0.38))]" />
+
+              <div className="absolute bottom-5 left-5 right-5 rounded-[24px] border border-white/15 bg-white/12 p-5 backdrop-blur-md">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-white/75">
+                  Relationship-first approach
+                </p>
+                <p className="mt-3 text-[15px] leading-7 text-white/88">
+                  We focus on dependable communication and steady coordination with
+                  every client, supplier, and logistics partner.
+                </p>
+              </div>
+            </div>
+          </AnimatedContent>
         </div>
       </section>
     </main>
