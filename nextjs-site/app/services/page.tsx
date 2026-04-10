@@ -264,7 +264,7 @@ export default function ServicesPage() {
                 scale={0.97}
                 threshold={0.15}
               >
-                <div className="h-full rounded-[30px]">
+                <div id={card.id} className="h-full scroll-mt-28 rounded-[30px]">
                   <SpotlightCard
                     className="group h-full overflow-hidden rounded-[30px] border border-[#e6e9ef] bg-white shadow-[0_12px_30px_rgba(0,0,0,0.05)] transition duration-300 hover:-translate-y-1.5"
                     spotlightColor="rgba(13,76,143,0.18)"
@@ -546,12 +546,13 @@ export default function ServicesPage() {
                   threshold={0.15}
                 >
                   <motion.button
+                    id={card.id}
                     type="button"
                     onClick={() => openModal(card.id)}
                     whileHover={{ y: -4, scale: 1.01 }}
                     whileTap={{ scale: 0.985 }}
                     transition={{ type: "spring", stiffness: 260, damping: 20 }}
-                    className="flex w-full items-center gap-4 rounded-[28px] border border-[#e5e8ee] bg-white px-4 py-5 text-left shadow-[0_10px_22px_rgba(0,0,0,0.04)]"
+                    className="flex w-full scroll-mt-28 items-center gap-4 rounded-[28px] border border-[#e5e8ee] bg-white px-4 py-5 text-left shadow-[0_10px_22px_rgba(0,0,0,0.04)]"
                   >
                     <div className="relative flex h-14 w-14 flex-shrink-0 items-center justify-center overflow-hidden rounded-[18px] bg-[#eef2f5]">
                       {card.imageSrc ? (
