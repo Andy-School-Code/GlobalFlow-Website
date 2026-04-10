@@ -13,6 +13,19 @@ const companyStats = [
   { value: 2.4, suffix: "K", label: "Documents coordinated" },
 ];
 
+const pillars = [
+  {
+    title: "Our Vision",
+    description:
+      "To become the trusted bridge between businesses and dependable trade opportunities across global markets.",
+  },
+  {
+    title: "Our Mission",
+    description:
+      "To simplify sourcing, logistics, and trade coordination with clear guidance and reliable execution.",
+  },
+];
+
 export default function AboutPage() {
   return (
     <main className="min-h-screen bg-[#f3f4f6] pt-20 text-[#13213d]">
@@ -155,6 +168,38 @@ export default function AboutPage() {
               </div>
             </div>
           </AnimatedContent>
+        </div>
+      </section>
+
+      <section className="bg-[#123b78] py-10 sm:py-12">
+        <div className="mx-auto grid w-[92%] max-w-7xl gap-6 md:grid-cols-2 xl:w-[88%]">
+          {pillars.map((pillar, index) => (
+            <AnimatedContent
+              key={pillar.title}
+              distance={42}
+              direction="vertical"
+              reverse={false}
+              duration={0.8}
+              ease="power3.out"
+              initialOpacity={0}
+              animateOpacity
+              scale={0.98}
+              threshold={0.15}
+              delay={index * 0.08}
+            >
+              <div className="h-full rounded-[28px] border border-white/10 bg-white/6 p-7 text-white backdrop-blur-sm">
+                <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-white/12 text-[13px] font-semibold uppercase tracking-[0.18em] text-white/80">
+                  {index === 0 ? "V" : "M"}
+                </div>
+
+                <h3 className="mt-5 text-[1.6rem] font-semibold">{pillar.title}</h3>
+
+                <p className="mt-4 max-w-md text-[15px] leading-8 text-white/78">
+                  {pillar.description}
+                </p>
+              </div>
+            </AnimatedContent>
+          ))}
         </div>
       </section>
     </main>
