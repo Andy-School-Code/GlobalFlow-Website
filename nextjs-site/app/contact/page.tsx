@@ -159,66 +159,70 @@ export default function ContactPage() {
   return (
     <main className="bg-[#f3f4f6] pt-20 text-[#13213d]">
       {/* DESKTOP / TABLET */}
-      <div className="hidden md:block">
-        <section className="relative overflow-hidden bg-[#0d4c8f]">
-          <div className="absolute inset-0">
-            <Image
-              src="/images/contact/contact-hero.jpg"
-              alt="Contact GlobalFlow Trading"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-
-          <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,31,63,0.86),rgba(5,31,63,0.58))]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_26%,rgba(255,255,255,0.08),transparent_34%)]" />
-          <div className="pointer-events-none absolute right-10 top-10 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
-          <div className="pointer-events-none absolute left-[10%] top-1/3 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
-
-          <div className="relative mx-auto w-[88%] py-16 lg:py-20">
-            <AnimatedContent
-              distance={60}
-              direction="vertical"
-              reverse={false}
-              duration={0.8}
-              ease="power3.out"
-              initialOpacity={0}
-              animateOpacity
-              scale={1}
-              threshold={0.15}
-            >
-              <div className="max-w-2xl">
-                <FadeContent blur duration={700} easing="ease-out" initialOpacity={0}>
-                  <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/75 backdrop-blur-sm">
-                    Contact GlobalFlow
-                  </p>
-                </FadeContent>
-
-                <div className="mt-4">
-                  <BlurText
-                    text="Connect With Our Specialists"
-                    delay={120}
-                    animateBy="words"
-                    direction="top"
-                    className="text-5xl font-bold leading-tight text-white lg:text-6xl"
-                  />
-                </div>
-
-                <FadeContent blur duration={900} easing="ease-out" initialOpacity={0}>
-                  <p className="mt-6 max-w-xl text-[16px] leading-8 text-white/85">
-                    If you are interested in working with GlobalFlow Trading Inc. or
-                    would like more information about our services and products,
-                    please contact us using the form below.
-                  </p>
-                </FadeContent>
+      <div className="hidden lg:block">
+        <section className="bg-[#f3f4f6] pt-2">
+          <div className="mx-auto w-[92%] max-w-7xl xl:w-[88%]">
+            <div className="relative min-h-[24rem] overflow-hidden rounded-[34px] bg-[#0d4c8f] lg:min-h-[27rem] xl:min-h-[30rem]">
+              <div className="absolute inset-0">
+                <Image
+                  src="/images/contact/contact-hero.jpg"
+                  alt="Contact GlobalFlow Trading"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                />
               </div>
-            </AnimatedContent>
+
+              <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(5,31,63,0.86),rgba(5,31,63,0.58))]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_78%_26%,rgba(255,255,255,0.08),transparent_34%)]" />
+              <div className="pointer-events-none absolute right-10 top-10 h-24 w-24 rounded-full bg-white/10 blur-2xl" />
+              <div className="pointer-events-none absolute left-[10%] top-1/3 h-32 w-32 rounded-full bg-white/10 blur-3xl" />
+
+              <div className="relative px-8 py-14 lg:px-10 lg:py-16 xl:px-12 xl:py-20">
+                <AnimatedContent
+                  distance={60}
+                  direction="vertical"
+                  reverse={false}
+                  duration={0.8}
+                  ease="power3.out"
+                  initialOpacity={0}
+                  animateOpacity
+                  scale={1}
+                  threshold={0.15}
+                >
+                  <div className="max-w-2xl">
+                    <FadeContent blur duration={700} easing="ease-out" initialOpacity={0}>
+                      <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/75 backdrop-blur-sm">
+                        Contact GlobalFlow
+                      </p>
+                    </FadeContent>
+
+                    <div className="mt-4">
+                      <BlurText
+                        text="Connect With Our Specialists"
+                        delay={120}
+                        animateBy="words"
+                        direction="top"
+                        className="text-4xl font-bold leading-tight text-white xl:text-6xl"
+                      />
+                    </div>
+
+                    <FadeContent blur duration={900} easing="ease-out" initialOpacity={0}>
+                      <p className="mt-6 max-w-xl text-[16px] leading-8 text-white/85">
+                        If you are interested in working with GlobalFlow Trading Inc. or
+                        would like more information about our services and products,
+                        please contact us using the form below.
+                      </p>
+                    </FadeContent>
+                  </div>
+                </AnimatedContent>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto w-[88%] py-14 lg:py-16">
-          <div className="grid gap-8 lg:grid-cols-[1.8fr_0.95fr]">
+        <section className="mx-auto w-[92%] max-w-7xl py-14 xl:w-[88%] lg:py-16">
+          <div className="grid gap-8 xl:grid-cols-[1.8fr_0.95fr]">
             <AnimatedContent
               className="h-full"
               distance={40}
@@ -655,8 +659,8 @@ export default function ContactPage() {
       </div>
 
       {/* MOBILE */}
-      <div className="md:hidden">
-        <section className="mx-auto w-[88%] py-6">
+      <div className="lg:hidden">
+        <section className="mx-auto w-[92%] max-w-3xl py-6 sm:w-[88%]">
           <AnimatedContent
             distance={35}
             direction="vertical"
@@ -681,12 +685,12 @@ export default function ContactPage() {
               <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(7,27,53,0.18),rgba(7,27,53,0.72))]" />
               <div className="relative px-5 py-8">
                 <p className="inline-block rounded-full bg-white/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-[0.15em] text-white backdrop-blur-sm">
-                  Support
+                  Contact GlobalFlow
                 </p>
 
                 <div className="mt-4">
                   <BlurText
-                    text="Get In Touch"
+                    text="Connect With Our Specialists"
                     delay={110}
                     animateBy="words"
                     direction="top"
@@ -695,8 +699,9 @@ export default function ContactPage() {
                 </div>
 
                 <p className="mt-3 text-[14px] leading-6 text-white/85">
-                  Interested in working with GlobalFlow Trading Inc.? Contact us
-                  below.
+                  If you are interested in working with GlobalFlow Trading Inc. or
+                  would like more information about our services and products,
+                  please contact us using the form below.
                 </p>
               </div>
             </div>

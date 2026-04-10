@@ -5,8 +5,8 @@ import Image from "next/image";
 export default function Footer() {
   return (
     <footer className="bg-[#f3f3f3] text-[#123b78]">
-      <div className="mx-auto w-[88%] px-6 py-12">
-        <div className="grid gap-8 md:grid-cols-4">
+      <div className="mx-auto w-[92%] max-w-7xl px-4 py-12 sm:w-[88%] sm:px-6">
+        <div className="grid gap-8 sm:grid-cols-2 xl:grid-cols-4">
           {/* Brand */}
           <div>
             <div className="flex items-center gap-3">
@@ -23,7 +23,7 @@ export default function Footer() {
               </span>
             </div>
 
-            <p className="mt-5 max-w-[240px] text-[15px] leading-8 text-[#123b78]/70">
+            <p className="mt-5 max-w-[240px] text-[15px] leading-7 text-[#123b78]/70">
               Leading the way in global trade coordination and product sourcing
               from Toronto to the world.
             </p>
@@ -64,17 +64,17 @@ export default function Footer() {
             </h4>
 
             <div className="mt-5 space-y-4 text-[15px] text-[#123b78]/70">
-              <div className="flex items-center gap-3">
+              <div className="flex items-start gap-3">
                 <span>✉</span>
                 <span>info@globalflowtrading.com</span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-start gap-3">
                 <span>☎</span>
                 <span>+1 (416) 254-0593</span>
               </div>
 
-              <div className="flex items-center gap-3">
+              <div className="flex items-start gap-3">
                 <span>📍</span>
                 <span>Toronto, Ontario, Canada</span>
               </div>
