@@ -157,66 +157,70 @@ export default function ServicesPage() {
     <main className="bg-[#f3f4f6] pt-20 text-[#13213d]">
       {/* DESKTOP / TABLET */}
       <div className="hidden md:block">
-        <section className="relative overflow-hidden bg-[#0d4c8f]">
-          <div className="absolute inset-0">
-            <Image
-              src="/images/services/services-hero.png"
-              alt="GlobalFlow Trading services hero"
-              fill
-              className="object-cover"
-              priority
-            />
-          </div>
-          <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,31,63,0.9),rgba(8,49,96,0.68))]" />
-          <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.08),transparent_35%)]" />
-          <div className="pointer-events-none absolute -left-10 top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
-          <div className="pointer-events-none absolute bottom-8 right-10 h-48 w-48 rounded-full bg-[#9fd0ff]/15 blur-3xl" />
-
-          <div className="relative mx-auto w-[88%] py-16 lg:py-20">
-            <AnimatedContent
-              distance={60}
-              direction="vertical"
-              reverse={false}
-              duration={0.8}
-              ease="power3.out"
-              initialOpacity={0}
-              animateOpacity
-              scale={1}
-              threshold={0.15}
-            >
-              <div className="max-w-3xl">
-                  <FadeContent blur duration={700} easing="ease-out" initialOpacity={0}>
-                    <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/75 backdrop-blur-sm">
-                      Our Expertise
-                    </p>
-                  </FadeContent>
-
-                  <div className="mt-5">
-                    <BlurText
-                      text="Comprehensive Global Trading Solutions"
-                      delay={120}
-                      animateBy="words"
-                      direction="top"
-                      className="max-w-3xl text-5xl font-bold leading-[1.02] text-white lg:text-6xl"
-                    />
-                  </div>
-
-                  <FadeContent blur duration={900} easing="ease-out" initialOpacity={0}>
-                    <p className="mt-6 max-w-2xl text-[16px] leading-8 text-white/82">
-                      Empowering your business with seamless international trade,
-                      logistics, and compliance expertise across global markets.
-                    </p>
-                  </FadeContent>
-
-                  <FadeContent blur duration={1000} easing="ease-out" initialOpacity={0}>
-                    <div className="mt-8" />
-                  </FadeContent>
+        <section className="bg-[#f3f4f6] pt-2">
+          <div className="mx-auto w-[92%] max-w-7xl xl:w-[88%]">
+            <div className="relative min-h-[24rem] overflow-hidden rounded-[34px] bg-[#0d4c8f] lg:min-h-[27rem] xl:min-h-[30rem]">
+              <div className="absolute inset-0">
+                <Image
+                  src="/images/services/services-hero.png"
+                  alt="GlobalFlow Trading services hero"
+                  fill
+                  className="object-cover object-center"
+                  priority
+                />
               </div>
-            </AnimatedContent>
+              <div className="absolute inset-0 bg-[linear-gradient(100deg,rgba(5,31,63,0.9),rgba(8,49,96,0.68))]" />
+              <div className="absolute inset-0 bg-[radial-gradient(circle_at_70%_40%,rgba(255,255,255,0.08),transparent_35%)]" />
+              <div className="pointer-events-none absolute -left-10 top-10 h-40 w-40 rounded-full bg-white/10 blur-3xl" />
+              <div className="pointer-events-none absolute bottom-8 right-10 h-48 w-48 rounded-full bg-[#9fd0ff]/15 blur-3xl" />
+
+              <div className="relative px-8 py-14 lg:px-10 lg:py-16 xl:px-12 xl:py-20">
+                <AnimatedContent
+                  distance={60}
+                  direction="vertical"
+                  reverse={false}
+                  duration={0.8}
+                  ease="power3.out"
+                  initialOpacity={0}
+                  animateOpacity
+                  scale={1}
+                  threshold={0.15}
+                >
+                  <div className="max-w-3xl">
+                    <FadeContent blur duration={700} easing="ease-out" initialOpacity={0}>
+                      <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/75 backdrop-blur-sm">
+                        Our Expertise
+                      </p>
+                    </FadeContent>
+
+                    <div className="mt-5">
+                      <BlurText
+                        text="Comprehensive Global Trading Solutions"
+                        delay={120}
+                        animateBy="words"
+                        direction="top"
+                        className="max-w-3xl text-4xl font-bold leading-[1.02] text-white xl:text-6xl"
+                      />
+                    </div>
+
+                    <FadeContent blur duration={900} easing="ease-out" initialOpacity={0}>
+                      <p className="mt-6 max-w-2xl text-[16px] leading-8 text-white/82">
+                        Empowering your business with seamless international trade,
+                        logistics, and compliance expertise across global markets.
+                      </p>
+                    </FadeContent>
+
+                    <FadeContent blur duration={1000} easing="ease-out" initialOpacity={0}>
+                      <div className="mt-8" />
+                    </FadeContent>
+                  </div>
+                </AnimatedContent>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="mx-auto w-[88%] py-14 lg:py-16">
+        <section className="mx-auto w-[92%] max-w-7xl py-14 xl:w-[88%] lg:py-16">
           <AnimatedContent
             distance={40}
             direction="vertical"
@@ -228,9 +232,9 @@ export default function ServicesPage() {
             scale={0.98}
             threshold={0.15}
           >
-            <div className="flex items-start justify-between gap-6">
+            <div className="flex flex-col items-start gap-6 xl:flex-row xl:justify-between">
               <div>
-                <h2 className="text-[2.3rem] font-bold text-[#16233e]">
+                <h2 className="text-4xl font-bold text-[#16233e] xl:text-[2.3rem]">
                   Specialized Trading Services
                 </h2>
                 <div className="mt-4 h-[4px] w-14 rounded-full bg-[#0d4c8f]" />
@@ -246,7 +250,7 @@ export default function ServicesPage() {
             </div>
           </AnimatedContent>
 
-          <div className="mt-10 grid gap-6 xl:grid-cols-3">
+          <div className="mt-10 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
             {desktopCards.map((card) => (
               <AnimatedContent
                 key={card.id}
@@ -373,7 +377,7 @@ export default function ServicesPage() {
         </section>
 
         <section className="bg-[#eef2f6] py-20">
-          <div className="mx-auto grid w-[88%] gap-8 lg:grid-cols-[0.9fr_1.1fr] lg:items-center">
+          <div className="mx-auto grid w-[92%] max-w-7xl gap-8 xl:w-[88%] xl:grid-cols-[0.9fr_1.1fr] xl:items-center">
             <AnimatedContent
               distance={40}
               direction="vertical"
@@ -386,7 +390,7 @@ export default function ServicesPage() {
               threshold={0.15}
             >
               <div>
-                <h2 className="text-[3rem] font-bold text-[#16233e]">
+                <h2 className="text-4xl font-bold text-[#16233e] xl:text-[3rem]">
                   Ready to Expand Your Global Reach?
                 </h2>
 
@@ -422,7 +426,7 @@ export default function ServicesPage() {
               </div>
             </AnimatedContent>
 
-            <div className="grid gap-4 md:grid-cols-3">
+            <div className="grid gap-4 md:grid-cols-2 xl:grid-cols-3">
               {serviceSteps.map((step, index) => (
                 <AnimatedContent
                   key={step.title}
@@ -459,7 +463,7 @@ export default function ServicesPage() {
 
       {/* MOBILE */}
       <div className="md:hidden">
-        <section className="mx-auto w-[88%] py-6">
+        <section className="mx-auto w-[92%] max-w-3xl py-6 sm:w-[88%]">
           <AnimatedContent
             distance={35}
             direction="vertical"
@@ -490,7 +494,7 @@ export default function ServicesPage() {
 
                 <div className="mt-4">
                   <BlurText
-                    text="Trade Support That Moves Faster"
+                    text="Comprehensive Global Trading Solutions"
                     delay={110}
                     animateBy="words"
                     direction="top"
@@ -499,8 +503,8 @@ export default function ServicesPage() {
                 </div>
 
                 <p className="mt-3 text-[14px] leading-6 text-white/88">
-                  Empowering global trade through strategic sourcing, shipping,
-                  logistics, and compliance support.
+                  Empowering your business with seamless international trade,
+                  logistics, and compliance expertise across global markets.
                 </p>
               </div>
             </div>
@@ -519,10 +523,11 @@ export default function ServicesPage() {
               threshold={0.15}
             >
               <h2 className="text-[2rem] font-bold text-[#16233e]">
-                Our Core Services
+                Specialized Trading Services
               </h2>
               <p className="mt-1 text-[14px] text-[#66758d]">
-                Comprehensive trade solutions for global businesses.
+                We provide end-to-end support for businesses looking to scale
+                their international presence through strategic trade management.
               </p>
             </AnimatedContent>
 

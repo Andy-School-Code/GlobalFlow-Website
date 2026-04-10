@@ -2,8 +2,11 @@
 
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "motion/react";
 import { usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
+import ShinyText from "@/components/reactbits/ShinyText";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 const navItems = [
   { label: "Home", href: "/" },
@@ -37,11 +40,14 @@ export default function Navbar() {
       <div className="flex justify-center px-3 pt-3 sm:px-0 sm:pt-4">
         <div
           className={`${
-            scrolled ? "w-[94%] sm:w-[76%]" : "w-full sm:w-[96%]"
+            scrolled ? "w-[94%] lg:w-[88%] xl:w-[76%]" : "w-full lg:w-[96%]"
           } transition-all duration-500 ease-in-out`}
         >
           {/* MAIN NAVBAR PILL */}
-          <div className="rounded-full border border-white/10 bg-[#060912]/95 px-3 py-1 shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:px-5 sm:py-0.5">
+          <SpotlightCard
+            className="rounded-full border border-white/10 bg-[#060912]/95 px-3 py-1 shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl sm:px-5 sm:py-0.5"
+            spotlightColor="rgba(255, 255, 255, 0.14)"
+          >
             <div className="relative flex items-center justify-between gap-2">
               {/* Left brand */}
               <Link
@@ -56,26 +62,51 @@ export default function Navbar() {
                   height={40}
                   className="h-6 w-6 flex-shrink-0 object-contain sm:h-7 sm:w-7"
                 />
-                <span className="truncate text-[0.78rem] font-semibold text-white sm:text-[1.1rem]">
+                <span className="max-w-[12rem] truncate text-[0.78rem] font-semibold text-white sm:max-w-none sm:text-[0.95rem] lg:text-[1.02rem]">
                   GlobalFlow Trading Inc.
                 </span>
               </Link>
 
               {/* Desktop nav */}
-              <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-10 md:flex">
+              <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 xl:flex">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
 
                   const content = (
-                    <span
-                      className={`text-[15px] transition ${
-                        active
-                          ? "font-semibold text-white"
-                          : "text-white/70 hover:text-white"
+                    <motion.span
+                      className={`relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] ${
+                        active ? "font-semibold text-white" : "text-white/70"
                       }`}
+                      animate={{
+                        color: active
+                          ? "rgba(255,255,255,1)"
+                          : "rgba(255,255,255,0.7)",
+                      }}
+                      transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                      whileHover={!active ? { y: -1, color: "rgba(255,255,255,1)" } : undefined}
                     >
+                      {active && (
+                        <motion.span
+                          layoutId="desktop-active-nav-pill"
+                          className="absolute inset-0 -z-10 rounded-full bg-white/10 ring-1 ring-white/15"
+                          transition={{
+                            type: "spring",
+                            stiffness: 180,
+                            damping: 24,
+                            mass: 1.05,
+                          }}
+                        />
+                      )}
+                      {active && (
+                        <motion.span
+                          className="h-2 w-2 rounded-full bg-emerald-400"
+                          initial={{ scale: 0.6, opacity: 0 }}
+                          animate={{ scale: 1, opacity: 1 }}
+                          transition={{ duration: 0.22, ease: "easeOut" }}
+                        />
+                      )}
                       {item.label}
-                    </span>
+                    </motion.span>
                   );
 
                   if (item.href === "#") {
@@ -95,12 +126,19 @@ export default function Navbar() {
               </nav>
 
               {/* Desktop button */}
-              <div className="ml-auto hidden md:flex">
+              <div className="ml-auto hidden xl:flex">
                 <Link
                   href="/contact"
                   className="rounded-full bg-white px-6 py-2.5 text-[14px] font-semibold text-[#060912] transition hover:bg-gray-200"
                 >
-                  Book a Call
+                  <ShinyText
+                    text="Book a Call"
+                    speed={3}
+                    className="text-[14px] font-semibold"
+                    color="#0b1220"
+                    shineColor="#5b8cff"
+                    spread={135}
+                  />
                 </Link>
               </div>
 
@@ -108,27 +146,32 @@ export default function Navbar() {
               <button
                 type="button"
                 onClick={() => setMenuOpen((prev) => !prev)}
-                className="ml-auto rounded-full border border-white/15 px-3 py-1.5 text-xs font-medium text-white transition hover:bg-white/5 md:hidden"
+                className="ml-auto inline-flex h-11 items-center rounded-full border border-white/15 px-5 text-[14px] font-semibold text-white transition hover:bg-white/5 xl:hidden"
               >
                 {menuOpen ? "Close" : "Menu"}
               </button>
             </div>
-          </div>
+          </SpotlightCard>
 
           {/* MOBILE DROPDOWN - OUTSIDE THE PILL */}
           {menuOpen && (
-            <div className="mt-3 rounded-3xl border border-white/10 bg-[#060912]/95 p-4 shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl md:hidden">
+            <div className="mt-3 rounded-3xl border border-white/10 bg-[#060912]/95 p-4 shadow-[0_12px_35px_rgba(0,0,0,0.24)] backdrop-blur-xl xl:hidden">
               <div className="flex flex-col gap-2 text-sm text-white">
                 <Link
                   href="/"
                   onClick={closeMenu}
                   className={`rounded-xl px-3 py-2 transition ${
                     isActive("/")
-                      ? "bg-white/10 font-semibold text-white"
+                      ? "bg-white/10 font-semibold text-white ring-1 ring-white/15"
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  Home
+                  <span className="inline-flex items-center gap-2">
+                    {isActive("/") && (
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                    )}
+                    Home
+                  </span>
                 </Link>
 
                 <span className="rounded-xl px-3 py-2 text-white/75">
@@ -140,11 +183,16 @@ export default function Navbar() {
                   onClick={closeMenu}
                   className={`rounded-xl px-3 py-2 transition ${
                     isActive("/services")
-                      ? "bg-white/10 font-semibold text-white"
+                      ? "bg-white/10 font-semibold text-white ring-1 ring-white/15"
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  Services
+                  <span className="inline-flex items-center gap-2">
+                    {isActive("/services") && (
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                    )}
+                    Services
+                  </span>
                 </Link>
 
                 <span className="rounded-xl px-3 py-2 text-white/75">
@@ -156,11 +204,16 @@ export default function Navbar() {
                   onClick={closeMenu}
                   className={`rounded-xl px-3 py-2 transition ${
                     isActive("/contact")
-                      ? "bg-white/10 font-semibold text-white"
+                      ? "bg-white/10 font-semibold text-white ring-1 ring-white/15"
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  Contact
+                  <span className="inline-flex items-center gap-2">
+                    {isActive("/contact") && (
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                    )}
+                    Contact
+                  </span>
                 </Link>
 
                 <Link
@@ -168,7 +221,14 @@ export default function Navbar() {
                   onClick={closeMenu}
                   className="mt-3 rounded-full bg-white px-5 py-2.5 text-center font-semibold text-[#060912]"
                 >
-                  Book a Call
+                  <ShinyText
+                    text="Book a Call"
+                    speed={3}
+                    className="text-sm font-semibold"
+                    color="#0b1220"
+                    shineColor="#5b8cff"
+                    spread={135}
+                  />
                 </Link>
               </div>
             </div>
