@@ -10,7 +10,7 @@ import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 const navItems = [
   { label: "Home", href: "/" },
-  { label: "About Us", href: "#" },
+  { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Products", href: "#" },
   { label: "Contact", href: "/contact" },
@@ -174,9 +174,22 @@ export default function Navbar() {
                   </span>
                 </Link>
 
-                <span className="rounded-xl px-3 py-2 text-white/75">
-                  About Us
-                </span>
+                <Link
+                  href="/about"
+                  onClick={closeMenu}
+                  className={`rounded-xl px-3 py-2 transition ${
+                    isActive("/about")
+                      ? "bg-white/10 font-semibold text-white ring-1 ring-white/15"
+                      : "text-white/75 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
+                  <span className="inline-flex items-center gap-2">
+                    {isActive("/about") && (
+                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
+                    )}
+                    About Us
+                  </span>
+                </Link>
 
                 <Link
                   href="/services"
