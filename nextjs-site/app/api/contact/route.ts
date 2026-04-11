@@ -1,7 +1,20 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+export const runtime = "nodejs";
+
+function getResend() {
+  const key = process.env.RESEND_API_KEY;
+  if (!key) return null;
+  return new Resend(key);
+}
+
+function resendErrorMessage(error: { message?: string } | null): string {
+  if (!error) return "Unknown email error.";
+  return typeof error.message === "string" && error.message.trim()
+    ? error.message
+    : "Email provider rejected the request.";
+}
 
 function escapeHtml(value: string) {
   return value
@@ -25,12 +38,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const toEmail = process.env.CONTACT_TO_EMAIL;
-    const fromEmail = process.env.CONTACT_FROM_EMAIL;
+    const toEmail = process.env.CONTACT_TO_EMAIL?.trim();
+    const fromEmail = process.env.CONTACT_FROM_EMAIL?.trim();
+    const resendClient = getResend();
 
-    if (!toEmail || !fromEmail || !process.env.RESEND_API_KEY) {
+    if (!toEmail || !fromEmail || !resendClient) {
       return NextResponse.json(
-        { error: "Email service is not configured properly." },
+        {
+          error:
+            "Email service is not configured. Add RESEND_API_KEY, CONTACT_FROM_EMAIL, and CONTACT_TO_EMAIL to your environment (see .env.example).",
+        },
         { status: 500 }
       );
     }
@@ -63,7 +80,7 @@ export async function POST(request: Request) {
         </div>
       `;
 
-      const { error } = await resend.emails.send({
+      const { error } = await resendClient.emails.send({
         from: fromEmail,
         to: [toEmail],
         replyTo: email,
@@ -72,8 +89,9 @@ export async function POST(request: Request) {
       });
 
       if (error) {
+        console.error("[contact] Resend (message):", error);
         return NextResponse.json(
-          { error: "Failed to send inquiry email." },
+          { error: resendErrorMessage(error) },
           { status: 500 }
         );
       }
@@ -112,7 +130,7 @@ export async function POST(request: Request) {
       </div>
     `;
 
-    const { error } = await resend.emails.send({
+    const { error } = await resendClient.emails.send({
       from: fromEmail,
       to: [toEmail],
       replyTo: email,
@@ -121,16 +139,23 @@ export async function POST(request: Request) {
     });
 
     if (error) {
+      console.error("[contact] Resend (call):", error);
       return NextResponse.json(
-        { error: "Failed to send booking request email." },
+        { error: resendErrorMessage(error) },
         { status: 500 }
       );
     }
 
     return NextResponse.json({ success: true });
-  } catch {
+  } catch (err) {
+    console.error("[contact] Unexpected error:", err);
     return NextResponse.json(
-      { error: "Something went wrong while processing your request." },
+      {
+        error:
+          err instanceof Error
+            ? err.message
+            : "Something went wrong while processing your request.",
+      },
       { status: 500 }
     );
   }

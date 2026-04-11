@@ -10,7 +10,7 @@ import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 const navItems = [
   { label: "Home", href: "/home" },
-  { label: "About Us", href: "#" },
+  { label: "About Us", href: "/about" },
   { label: "Services", href: "/services" },
   { label: "Products", href: "/products" },
   { label: "Contact", href: "/contact" },
@@ -68,13 +68,13 @@ export default function Navbar() {
               </Link>
 
               {/* Desktop nav */}
-              <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-6 xl:flex">
+              <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-4 whitespace-nowrap 2xl:gap-6 xl:flex">
                 {navItems.map((item) => {
                   const active = isActive(item.href);
 
                   const content = (
                     <motion.span
-                      className={`relative inline-flex items-center gap-2 rounded-full px-4 py-2 text-[15px] ${
+                      className={`relative inline-flex items-center gap-2 whitespace-nowrap rounded-full px-4 py-2 text-[15px] ${
                         active ? "font-semibold text-white" : "text-white/70"
                       }`}
                       animate={{
@@ -95,14 +95,6 @@ export default function Navbar() {
                             damping: 24,
                             mass: 1.05,
                           }}
-                        />
-                      )}
-                      {active && (
-                        <motion.span
-                          className="h-2 w-2 rounded-full bg-emerald-400"
-                          initial={{ scale: 0.6, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.22, ease: "easeOut" }}
                         />
                       )}
                       {item.label}
@@ -128,7 +120,7 @@ export default function Navbar() {
               {/* Desktop button */}
               <div className="ml-auto hidden xl:flex">
                 <Link
-                  href="/contact"
+                  href="/contact#book-call"
                   className="rounded-full bg-white px-6 py-2.5 text-[14px] font-semibold text-[#060912] transition hover:bg-gray-200"
                 >
                   <ShinyText
@@ -166,17 +158,20 @@ export default function Navbar() {
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    {isActive("/home") && (
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    )}
-                    Home
-                  </span>
+                  Home
                 </Link>
 
-                <span className="rounded-xl px-3 py-2 text-white/75">
+                <Link
+                  href="/about"
+                  onClick={closeMenu}
+                  className={`rounded-xl px-3 py-2 transition ${
+                    isActive("/about")
+                      ? "bg-white/10 font-semibold text-white ring-1 ring-white/15"
+                      : "text-white/75 hover:bg-white/5 hover:text-white"
+                  }`}
+                >
                   About Us
-                </span>
+                </Link>
 
                 <Link
                   href="/services"
@@ -187,12 +182,7 @@ export default function Navbar() {
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    {isActive("/services") && (
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    )}
-                    Services
-                  </span>
+                  Services
                 </Link>
 
                 <span className="rounded-xl px-3 py-2 text-white/75">
@@ -208,16 +198,11 @@ export default function Navbar() {
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    {isActive("/contact") && (
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    )}
-                    Contact
-                  </span>
+                  Contact
                 </Link>
 
                 <Link
-                  href="/contact"
+                  href="/contact#book-call"
                   onClick={closeMenu}
                   className="mt-3 rounded-full bg-white px-5 py-2.5 text-center font-semibold text-[#060912]"
                 >

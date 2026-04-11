@@ -2,6 +2,7 @@
 
 import Image from "next/image";
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 
 import AnimatedContent from "@/components/reactbits/AnimatedContent";
 import BlurText from "@/components/reactbits/BlurText";
@@ -27,6 +28,7 @@ const OFFICE_MAP_LINK =
   "https://www.google.com/maps/search/?api=1&query=1385+Midland+Ave,+Toronto,+ON,+Canada";
 
 export default function ContactPage() {
+  const pathname = usePathname();
   const [formMode, setFormMode] = useState<FormMode>("message");
   const [submitState, setSubmitState] = useState<SubmitState>(initialSubmitState);
 
@@ -47,10 +49,30 @@ export default function ContactPage() {
   });
 
   useEffect(() => {
-    if (window.location.hash === "#book-call") {
+    if (pathname !== "/contact") return;
+
+    const scrollBookCallFormIntoView = () => {
+      window.setTimeout(() => {
+        const wide = window.matchMedia("(min-width: 1024px)").matches;
+        const target = wide
+          ? document.getElementById("contact-form-panel-desktop")
+          : document.getElementById("contact-form-panel-mobile");
+        target?.scrollIntoView({ behavior: "smooth", block: "start" });
+        target?.querySelector<HTMLInputElement>("input")?.focus({ preventScroll: true });
+      }, 160);
+    };
+
+    const syncBookCallFromHash = () => {
+      if (typeof window === "undefined") return;
+      if (window.location.hash !== "#book-call") return;
       setFormMode("call");
-    }
-  }, []);
+      scrollBookCallFormIntoView();
+    };
+
+    syncBookCallFromHash();
+    window.addEventListener("hashchange", syncBookCallFromHash);
+    return () => window.removeEventListener("hashchange", syncBookCallFromHash);
+  }, [pathname]);
 
   const resetFeedback = () => {
     setSubmitState((prev) => ({
@@ -224,7 +246,8 @@ export default function ContactPage() {
         <section className="mx-auto w-[92%] max-w-7xl py-14 xl:w-[88%] lg:py-16">
           <div className="grid gap-8 xl:grid-cols-[1.8fr_0.95fr]">
             <AnimatedContent
-              className="h-full"
+              id="contact-form-panel-desktop"
+              className="h-full scroll-mt-28"
               distance={40}
               direction="vertical"
               reverse={false}
@@ -304,7 +327,7 @@ export default function ContactPage() {
                 ) : null}
 
                 {submitState.error ? (
-                  <div className="mt-6 rounded-[22px] border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">
+                  <div className="mt-6 rounded-[22px] border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700 break-words">
                     {submitState.error}
                   </div>
                 ) : null}
@@ -708,6 +731,8 @@ export default function ContactPage() {
           </AnimatedContent>
 
           <AnimatedContent
+            id="contact-form-panel-mobile"
+            className="scroll-mt-28"
             distance={35}
             direction="vertical"
             reverse={false}
@@ -769,7 +794,7 @@ export default function ContactPage() {
               ) : null}
 
               {submitState.error ? (
-                <div className="mt-4 rounded-[20px] border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700">
+                <div className="mt-4 rounded-[20px] border border-red-200 bg-red-50 px-4 py-3 text-[14px] text-red-700 break-words">
                   {submitState.error}
                 </div>
               ) : null}

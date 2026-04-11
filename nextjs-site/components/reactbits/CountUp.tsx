@@ -1,5 +1,5 @@
-import { useInView, useMotionValue, useSpring } from 'motion/react';
-import { useCallback, useEffect, useRef } from 'react';
+import { useInView } from 'motion/react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 
 interface CountUpProps {
   to: number;
@@ -27,16 +27,7 @@ export default function CountUp({
   onEnd
 }: CountUpProps) {
   const ref = useRef<HTMLSpanElement>(null);
-  const motionValue = useMotionValue(direction === 'down' ? to : from);
-
-  const damping = 20 + 40 * (1 / duration);
-  const stiffness = 100 * (1 / duration);
-
-  const springValue = useSpring(motionValue, {
-    damping,
-    stiffness
-  });
-
+  const [displayValue, setDisplayValue] = useState(direction === 'down' ? to : from);
   const isInView = useInView(ref, { once: true, margin: '0px' });
 
   const getDecimalPlaces = (num: number): number => {
@@ -70,46 +61,54 @@ export default function CountUp({
   );
 
   useEffect(() => {
-    if (ref.current) {
-      ref.current.textContent = formatValue(direction === 'down' ? to : from);
-    }
-  }, [from, to, direction, formatValue]);
+    setDisplayValue(direction === 'down' ? to : from);
+  }, [from, to, direction]);
 
   useEffect(() => {
-    if (isInView && startWhen) {
-      if (typeof onStart === 'function') {
-        onStart();
-      }
+    if (!isInView || !startWhen) {
+      return;
+    }
 
-      const timeoutId = setTimeout(() => {
-        motionValue.set(direction === 'down' ? from : to);
-      }, delay * 1000);
+    const startValue = direction === 'down' ? to : from;
+    const endValue = direction === 'down' ? from : to;
+    let frameId = 0;
 
-      const durationTimeoutId = setTimeout(
-        () => {
-          if (typeof onEnd === 'function') {
-            onEnd();
-          }
-        },
-        delay * 1000 + duration * 1000
-      );
+    if (typeof onStart === 'function') {
+      onStart();
+    }
 
-      return () => {
-        clearTimeout(timeoutId);
-        clearTimeout(durationTimeoutId);
+    const timeoutId = setTimeout(() => {
+      const startTime = performance.now();
+
+      const tick = (now: number) => {
+        const progress = Math.min((now - startTime) / (duration * 1000), 1);
+        const eased = 1 - Math.pow(1 - progress, 3);
+        const nextValue = startValue + (endValue - startValue) * eased;
+
+        setDisplayValue(nextValue);
+
+        if (progress < 1) {
+          frameId = requestAnimationFrame(tick);
+          return;
+        }
+
+        setDisplayValue(endValue);
+
+        if (typeof onEnd === 'function') {
+          onEnd();
+        }
       };
-    }
-  }, [isInView, startWhen, motionValue, direction, from, to, delay, onStart, onEnd, duration]);
 
-  useEffect(() => {
-    const unsubscribe = springValue.on('change', (latest: number) => {
-      if (ref.current) {
-        ref.current.textContent = formatValue(latest);
+      frameId = requestAnimationFrame(tick);
+    }, delay * 1000);
+
+    return () => {
+      clearTimeout(timeoutId);
+      if (frameId) {
+        cancelAnimationFrame(frameId);
       }
-    });
+    };
+  }, [isInView, startWhen, direction, from, to, delay, onStart, onEnd, duration]);
 
-    return () => unsubscribe();
-  }, [springValue, formatValue]);
-
-  return <span className={className} ref={ref} />;
+  return <span className={className} ref={ref}>{formatValue(displayValue)}</span>;
 }
