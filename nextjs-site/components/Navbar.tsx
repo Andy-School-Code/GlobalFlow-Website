@@ -30,6 +30,7 @@ export default function Navbar() {
   const isActive = (href: string) => {
     if (href === "#") return false;
     if (href === "/") return pathname === "/";
+    if (href === "/home") return pathname === "/" || pathname === "/home";
     return pathname.startsWith(href);
   };
 
