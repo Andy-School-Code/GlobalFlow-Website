@@ -2,7 +2,15 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+import AnimatedContent from "@/components/reactbits/AnimatedContent";
+import BlurText from "@/components/reactbits/BlurText";
+import BorderGlow from "@/components/reactbits/BorderGlow";
+import FadeContent from "@/components/reactbits/FadeContent";
+import ShinyText from "@/components/reactbits/ShinyText";
+import SpotlightCard from "@/components/reactbits/SpotlightCard";
 
 const FILTERS = ["All", "Agriculture", "Metals", "Paper", "Custom"];
 
@@ -107,135 +115,243 @@ export default function ProductsPage() {
     });
   }, [activeFilter, query]);
 
+  useEffect(() => {
+    const frameId = requestAnimationFrame(() => {
+      ScrollTrigger.refresh();
+    });
+
+    return () => cancelAnimationFrame(frameId);
+  }, [activeFilter, query]);
+
   return (
     <main className="products-page">
       <section className="products-hero">
-        <div className="products-hero__text">
-          <p className="products-eyebrow">Global Offering</p>
-          <h1>Our Product Categories</h1>
-          <p>
-            Expert global sourcing and agile supply chain solutions for critical commodities. We connect verified suppliers with global industrial demand through confident quality coordination.
-          </p>
-          <div className="hero-pills">
-            <span>Agriculture</span>
-            <span>Metals</span>
-            <span>Paper</span>
-            <span>Logistics</span>
+        <AnimatedContent
+          className="products-hero__inner"
+          distance={52}
+          duration={0.8}
+          threshold={0.15}
+          ease="power3.out"
+          initialOpacity={0}
+          animateOpacity
+        >
+          <div className="products-hero__text">
+            <FadeContent blur duration={600} easing="ease-out" threshold={0.2}>
+              <p className="products-eyebrow">Global Offering</p>
+            </FadeContent>
+            <div className="mt-2">
+              <BlurText
+                text="Our Product Categories"
+                delay={75}
+                animateBy="words"
+                direction="top"
+                className="text-[clamp(2.6rem,3.4vw,3.4rem)] font-bold leading-tight text-[#0c1e3b]"
+              />
+            </div>
+            <FadeContent blur duration={780} easing="ease-out" threshold={0.12} delay={0.1}>
+              <p className="mt-4 text-[#425270]">
+                Expert global sourcing and agile supply chain solutions for critical commodities. We connect verified suppliers with global industrial demand through confident quality coordination.
+              </p>
+            </FadeContent>
+            <FadeContent duration={700} easing="ease-out" threshold={0.15} delay={0.12}>
+              <div className="hero-pills mt-4">
+                <span>Agriculture</span>
+                <span>Metals</span>
+                <span>Paper</span>
+                <span>Logistics</span>
+              </div>
+            </FadeContent>
           </div>
-        </div>
-        <div className="products-hero__card">
-          <p className="products-note">
-            Product inventory: Products are listed for informational purposes. Contact us before sourcing directly for product details, samples, and compliance documentation.
-          </p>
-        </div>
+          <BorderGlow
+            className="products-hero__card min-h-0 !border-white/10 p-[1.6rem]"
+            backgroundColor="#0d4c8f"
+            borderRadius={24}
+            glowColor="200 75 70"
+            colors={["#38bdf8", "#60a5fa", "#a78bfa"]}
+            fillOpacity={0.45}
+            animated
+          >
+            <p className="m-0 text-[0.96rem] leading-[1.7] text-[#f5f8ff]">
+              Product inventory: Products are listed for informational purposes. Contact us before sourcing directly for product details, samples, and compliance documentation.
+            </p>
+          </BorderGlow>
+        </AnimatedContent>
       </section>
 
       <section className="filters-panel">
-        <div className="filters-panel__search">
-          <label htmlFor="products-search" className="sr-only">
-            Search products
-          </label>
-          <input
-            id="products-search"
-            type="search"
-            placeholder="Search products..."
-            value={query}
-            onChange={(event) => setQuery(event.target.value)}
-          />
-        </div>
+        <AnimatedContent
+          className="filters-panel__track"
+          distance={36}
+          duration={0.7}
+          threshold={0.18}
+          ease="power3.out"
+          initialOpacity={0}
+          animateOpacity
+        >
+          <div className="filters-panel__search">
+            <label htmlFor="products-search" className="sr-only">
+              Search products
+            </label>
+            <input
+              id="products-search"
+              type="search"
+              placeholder="Search products..."
+              value={query}
+              onChange={(event) => setQuery(event.target.value)}
+            />
+          </div>
 
-        <div className="filters-panel__pills" role="tablist">
-          {FILTERS.map((filter) => {
-            const isActive = filter === activeFilter;
-            return (
-              <button
-                key={filter}
-                type="button"
-                role="tab"
-                aria-selected={isActive}
-                className={isActive ? "pill active" : "pill"}
-                onClick={() => setActiveFilter(filter)}
-              >
-                {filter}
-              </button>
-            );
-          })}
-        </div>
+          <div className="filters-panel__pills" role="tablist">
+            {FILTERS.map((filter) => {
+              const isActive = filter === activeFilter;
+              return (
+                <button
+                  key={filter}
+                  type="button"
+                  role="tab"
+                  aria-selected={isActive}
+                  className={isActive ? "pill active" : "pill"}
+                  onClick={() => setActiveFilter(filter)}
+                >
+                  {filter}
+                </button>
+              );
+            })}
+          </div>
+        </AnimatedContent>
       </section>
 
       <section className="products-grid" aria-live="polite">
-        {filteredProducts.map((product) => (
-          <article key={product.id} className="product-card">
-            <div className="product-card__media">
-              <Image
-                src={product.image}
-                alt={product.title}
-                width={640}
-                height={360}
-                priority={product.id === "agricultural"}
-              />
-              <span className={`product-badge product-badge--${product.badge.tone}`}>
-                {product.badge.label}
-              </span>
-            </div>
-            <div className="product-card__body">
-              <div>
-                <p className="product-card__category">{product.category}</p>
-                <h2>{product.title}</h2>
-                <p className="product-card__description">{product.description}</p>
+        {filteredProducts.map((product, index) => (
+          <AnimatedContent
+            key={product.id}
+            className="min-w-0"
+            distance={42}
+            duration={0.72}
+            threshold={0.1}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+            delay={index * 0.07}
+          >
+            <SpotlightCard
+              className="product-card min-w-0"
+              spotlightColor="rgba(13, 76, 143, 0.14)"
+            >
+              <div className="product-card__media">
+                <Image
+                  src={product.image}
+                  alt={product.title}
+                  width={640}
+                  height={360}
+                  priority={product.id === "agricultural"}
+                />
+                <span className={`product-badge product-badge--${product.badge.tone}`}>
+                  {product.badge.label}
+                </span>
               </div>
-
-              <div className="product-card__details">
+              <div className="product-card__body">
                 <div>
-                  <h3>Highlights</h3>
-                  <ul>
-                    {product.highlights.map((item) => (
-                      <li key={item}>{item}</li>
-                    ))}
-                  </ul>
+                  <p className="product-card__category">{product.category}</p>
+                  <h2>{product.title}</h2>
+                  <p className="product-card__description">{product.description}</p>
                 </div>
-                <div>
-                  <h3>Specifications</h3>
-                  <ul>
-                    {product.specs.map((spec) => (
-                      <li key={spec}>{spec}</li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
 
-              <div className="product-card__actions">
-                <Link href={product.cta.href} className="btn btn--primary">
-                  {product.cta.label}
-                </Link>
+                <div className="product-card__details">
+                  <div>
+                    <h3>Highlights</h3>
+                    <ul>
+                      {product.highlights.map((item) => (
+                        <li key={item}>{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                  <div>
+                    <h3>Specifications</h3>
+                    <ul>
+                      {product.specs.map((spec) => (
+                        <li key={spec}>{spec}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+
+                <div className="product-card__actions">
+                  <Link href={product.cta.href} className="btn btn--primary inline-flex items-center justify-center">
+                    <ShinyText
+                      text={product.cta.label}
+                      speed={2.6}
+                      className="text-[0.95rem] font-semibold"
+                      color="#ffffff"
+                      shineColor="#bfdbfe"
+                      spread={125}
+                    />
+                  </Link>
+                </div>
               </div>
-            </div>
-          </article>
+            </SpotlightCard>
+          </AnimatedContent>
         ))}
 
         {filteredProducts.length === 0 && (
-          <div className="empty-state">
-            <p>No products match your filters. Adjust your search or category.</p>
-          </div>
+          <AnimatedContent
+            className="min-w-0"
+            distance={32}
+            duration={0.65}
+            threshold={0.15}
+            ease="power3.out"
+            initialOpacity={0}
+            animateOpacity
+          >
+            <div className="empty-state">
+              <p>No products match your filters. Adjust your search or category.</p>
+            </div>
+          </AnimatedContent>
         )}
       </section>
 
       <section className="logistics-panel">
-        <div className="logistics-panel__intro">
-          <p className="products-eyebrow">Global Logistics & Packaging</p>
-          <h2>Value-added services built around every shipment.</h2>
-          <p>
-            From inspection to real-time tracking, our logistics desk ensures your cargo is protected, documented, and visible until final delivery.
-          </p>
-        </div>
-        <div className="logistics-panel__grid">
-          {LOGISTICS_FEATURES.map((feature) => (
-            <div key={feature.title} className="logistics-card">
-              <h3>{feature.title}</h3>
-              <p>{feature.description}</p>
-            </div>
-          ))}
-        </div>
+        <AnimatedContent
+          className="logistics-panel__inner"
+          distance={48}
+          duration={0.78}
+          threshold={0.12}
+          ease="power3.out"
+          initialOpacity={0}
+          animateOpacity
+        >
+          <div className="logistics-panel__intro">
+            <FadeContent blur duration={620} easing="ease-out" threshold={0.18}>
+              <p className="products-eyebrow text-[rgba(200,210,230,0.95)]">Global Logistics & Packaging</p>
+            </FadeContent>
+            <FadeContent duration={720} easing="ease-out" threshold={0.15} delay={0.06}>
+              <BlurText
+                text="Value-added services built around every shipment."
+                delay={70}
+                animateBy="words"
+                direction="top"
+                className="mt-3 text-[clamp(1.85rem,2.5vw,2.35rem)] font-bold leading-snug text-white"
+              />
+            </FadeContent>
+            <FadeContent blur duration={800} easing="ease-out" threshold={0.12} delay={0.1}>
+              <p className="mt-4 text-[rgba(246,247,251,0.88)]">
+                From inspection to real-time tracking, our logistics desk ensures your cargo is protected, documented, and visible until final delivery.
+              </p>
+            </FadeContent>
+          </div>
+          <div className="logistics-panel__grid">
+            {LOGISTICS_FEATURES.map((feature) => (
+              <SpotlightCard
+                key={feature.title}
+                className="logistics-card rounded-[24px] border border-white/[0.08] bg-[rgba(255,255,255,0.06)]"
+                spotlightColor="rgba(255, 255, 255, 0.14)"
+              >
+                <h3>{feature.title}</h3>
+                <p>{feature.description}</p>
+              </SpotlightCard>
+            ))}
+          </div>
+        </AnimatedContent>
       </section>
     </main>
   );

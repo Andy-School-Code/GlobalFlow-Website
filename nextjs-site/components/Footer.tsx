@@ -5,8 +5,9 @@ import Link from "next/link";
 
 export default function Footer() {
   return (
-    <footer className="bg-[#123b78] text-white">
-      <div className="mx-auto w-[92%] max-w-7xl px-4 py-8 sm:w-[88%] sm:px-6 sm:py-12">
+    <footer className="bg-[#f5f7fb] px-4 pb-4 text-white sm:px-6 sm:pb-6">
+      <div className="mx-auto w-full max-w-7xl rounded-[34px] bg-[#123b78] shadow-[0_28px_70px_rgba(10,29,64,0.2)] sm:rounded-[40px]">
+        <div className="mx-auto w-[92%] max-w-7xl px-4 py-8 sm:w-[88%] sm:px-6 sm:py-12">
         <div className="grid gap-8 xl:grid-cols-4">
           {/* Brand */}
           <div className="rounded-3xl border border-white/10 bg-white/5 p-5 sm:p-6">
@@ -159,6 +160,7 @@ export default function Footer() {
         {/* Divider */}
         <div className="mt-8 border-t border-white/15 pt-5 text-center text-[12px] text-white/60 sm:mt-10 sm:pt-6 sm:text-[14px]">
           © 2026 GlobalFlow Trading Inc. All rights reserved.
+        </div>
         </div>
       </div>
     </footer>

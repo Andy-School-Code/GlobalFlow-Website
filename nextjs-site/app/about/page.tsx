@@ -262,8 +262,10 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <section className="bg-[#123b78] py-10 sm:py-12">
-        <div className="mx-auto grid w-[92%] max-w-7xl gap-6 md:grid-cols-2 xl:w-[88%]">
+      <section className="bg-[#f3f4f6] py-10 sm:py-12">
+        <div className="mx-auto w-[92%] max-w-7xl xl:w-[88%]">
+          <div className="rounded-[34px] bg-[linear-gradient(135deg,#0f2f5d,#194783)] px-5 py-6 shadow-[0_24px_60px_rgba(11,35,73,0.18)] sm:rounded-[40px] sm:px-7 sm:py-8 lg:px-10">
+        <div className="grid gap-6 md:grid-cols-2">
           {pillars.map((pillar, index) => (
             <AnimatedContent
               key={pillar.title}
@@ -280,29 +282,29 @@ export default function AboutPage() {
             >
               <BorderGlow
                 className="h-full"
-                glowColor="212 80% 75%"
-                backgroundColor="rgba(255,255,255,0.04)"
+                glowColor="197 92% 76%"
+                backgroundColor="rgba(121,168,233,0.18)"
                 borderRadius={28}
                 glowRadius={26}
-                glowIntensity={0.5}
+                glowIntensity={0.6}
                 animated
-                colors={["#8bbcff", "#d7e8ff", "#7fd7ff"]}
-                fillOpacity={0.25}
+                colors={["#8fd3ff", "#f8fbff", "#c7e4ff"]}
+                fillOpacity={0.28}
               >
                 <SpotlightCard
-                  className="group h-full rounded-[28px] border border-white/10 bg-white/6 p-7 text-white backdrop-blur-sm transition duration-500 hover:-translate-y-2 hover:bg-white/12 hover:shadow-[0_20px_36px_rgba(8,35,71,0.3)]"
-                  spotlightColor="rgba(255,255,255,0.16)"
+                  className="group h-full rounded-[28px] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.97),rgba(243,248,255,0.94))] p-7 text-[#183153] shadow-[0_18px_36px_rgba(8,35,71,0.16)] transition duration-500 hover:-translate-y-2 hover:shadow-[0_24px_42px_rgba(8,35,71,0.22)]"
+                  spotlightColor="rgba(116, 189, 255, 0.24)"
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-white/12 text-[13px] font-semibold uppercase tracking-[0.18em] text-white/80 transition duration-500 group-hover:scale-110 group-hover:rotate-3">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-[#dceafe] text-[13px] font-semibold uppercase tracking-[0.18em] text-[#1b4f86] transition duration-500 group-hover:scale-110 group-hover:rotate-3">
                     {index === 0 ? "V" : "M"}
                   </div>
 
-                  <h3 className="mt-5 text-[1.6rem] font-semibold transition duration-500 group-hover:translate-x-1">
+                  <h3 className="mt-5 text-[1.6rem] font-semibold text-[#162a46] transition duration-500 group-hover:translate-x-1">
                     {pillar.title}
                   </h3>
 
                   <FadeContent blur duration={750 + index * 120} easing="ease-out" initialOpacity={0}>
-                    <p className="mt-4 max-w-md text-[15px] leading-8 text-white/78">
+                    <p className="mt-4 max-w-md text-[15px] leading-8 text-[#526887]">
                       {pillar.description}
                     </p>
                   </FadeContent>
@@ -310,6 +312,8 @@ export default function AboutPage() {
               </BorderGlow>
             </AnimatedContent>
           ))}
+        </div>
+          </div>
         </div>
       </section>
 
