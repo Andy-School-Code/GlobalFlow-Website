@@ -97,14 +97,6 @@ export default function Navbar() {
                           }}
                         />
                       )}
-                      {active && (
-                        <motion.span
-                          className="h-2 w-2 rounded-full bg-emerald-400"
-                          initial={{ scale: 0.6, opacity: 0 }}
-                          animate={{ scale: 1, opacity: 1 }}
-                          transition={{ duration: 0.22, ease: "easeOut" }}
-                        />
-                      )}
                       {item.label}
                     </motion.span>
                   );
@@ -128,7 +120,7 @@ export default function Navbar() {
               {/* Desktop button */}
               <div className="ml-auto hidden xl:flex">
                 <Link
-                  href="/contact"
+                  href="/contact#book-call"
                   className="rounded-full bg-white px-6 py-2.5 text-[14px] font-semibold text-[#060912] transition hover:bg-gray-200"
                 >
                   <ShinyText
@@ -166,12 +158,7 @@ export default function Navbar() {
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    {isActive("/home") && (
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    )}
-                    Home
-                  </span>
+                  Home
                 </Link>
 
                 <Link
@@ -183,12 +170,7 @@ export default function Navbar() {
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    {isActive("/about") && (
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    )}
-                    About Us
-                  </span>
+                  About Us
                 </Link>
 
                 <Link
@@ -200,12 +182,7 @@ export default function Navbar() {
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    {isActive("/services") && (
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    )}
-                    Services
-                  </span>
+                  Services
                 </Link>
 
                 <span className="rounded-xl px-3 py-2 text-white/75">
@@ -221,16 +198,11 @@ export default function Navbar() {
                       : "text-white/75 hover:bg-white/5 hover:text-white"
                   }`}
                 >
-                  <span className="inline-flex items-center gap-2">
-                    {isActive("/contact") && (
-                      <span className="h-2 w-2 rounded-full bg-emerald-400" />
-                    )}
-                    Contact
-                  </span>
+                  Contact
                 </Link>
 
                 <Link
-                  href="/contact"
+                  href="/contact#book-call"
                   onClick={closeMenu}
                   className="mt-3 rounded-full bg-white px-5 py-2.5 text-center font-semibold text-[#060912]"
                 >
