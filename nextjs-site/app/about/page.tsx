@@ -103,7 +103,12 @@ export default function AboutPage() {
                 threshold={0.15}
               >
                 <div className="max-w-3xl">
-                  <FadeContent blur duration={700} easing="ease-out" initialOpacity={0}>
+                  <FadeContent
+                    blur
+                    duration={700}
+                    easing="ease-out"
+                    initialOpacity={0}
+                  >
                     <p className="inline-flex rounded-full border border-white/15 bg-white/10 px-4 py-1.5 text-[11px] font-semibold uppercase tracking-[0.25em] text-white/75 backdrop-blur-sm">
                       About GlobalFlow
                     </p>
@@ -119,15 +124,25 @@ export default function AboutPage() {
                     />
                   </div>
 
-                  <FadeContent blur duration={900} easing="ease-out" initialOpacity={0}>
+                  <FadeContent
+                    blur
+                    duration={900}
+                    easing="ease-out"
+                    initialOpacity={0}
+                  >
                     <p className="mt-6 max-w-2xl text-[15px] leading-8 text-white/84 sm:text-[16px]">
-                      Connecting businesses to sourcing, logistics, and global trade
-                      opportunities with practical coordination and dependable
-                      support.
+                      Connecting businesses to sourcing, logistics, and global
+                      trade opportunities with practical coordination and
+                      dependable support.
                     </p>
                   </FadeContent>
 
-                  <FadeContent blur duration={1050} easing="ease-out" initialOpacity={0}>
+                  <FadeContent
+                    blur
+                    duration={1050}
+                    easing="ease-out"
+                    initialOpacity={0}
+                  >
                     <div className="mt-8 flex flex-wrap gap-3">
                       <div className="rounded-full border border-white/15 bg-white/10 px-4 py-2">
                         <ShinyText
@@ -196,7 +211,8 @@ export default function AboutPage() {
               <p className="mt-5 max-w-2xl text-[15px] leading-8 text-[#627089]">
                 GlobalFlow Trading Inc. helps businesses manage sourcing,
                 documentation, shipment coordination, and global trade workflows
-                with a practical approach that keeps every stage easier to handle.
+                with a practical approach that keeps every stage easier to
+                handle.
               </p>
 
               <div className="mt-8 grid gap-5 sm:grid-cols-3">
@@ -253,8 +269,8 @@ export default function AboutPage() {
                   Relationship-first approach
                 </p>
                 <p className="mt-3 text-[15px] leading-7 text-white/88">
-                  We focus on dependable communication and steady coordination with
-                  every client, supplier, and logistics partner.
+                  We focus on dependable communication and steady coordination
+                  with every client, supplier, and logistics partner.
                 </p>
               </div>
             </SpotlightCard>
@@ -265,54 +281,59 @@ export default function AboutPage() {
       <section className="bg-[#f3f4f6] py-10 sm:py-12">
         <div className="mx-auto w-[92%] max-w-7xl xl:w-[88%]">
           <div className="rounded-[34px] bg-[linear-gradient(135deg,#0f2f5d,#194783)] px-5 py-6 shadow-[0_24px_60px_rgba(11,35,73,0.18)] sm:rounded-[40px] sm:px-7 sm:py-8 lg:px-10">
-        <div className="grid gap-6 md:grid-cols-2">
-          {pillars.map((pillar, index) => (
-            <AnimatedContent
-              key={pillar.title}
-              distance={56}
-              direction={index % 2 === 0 ? "horizontal" : "vertical"}
-              reverse={false}
-              duration={0.9}
-              ease="power3.out"
-              initialOpacity={0}
-              animateOpacity
-              scale={0.95}
-              threshold={0.15}
-              delay={index * 0.08}
-            >
-              <BorderGlow
-                className="h-full"
-                glowColor="197 92% 76%"
-                backgroundColor="rgba(121,168,233,0.18)"
-                borderRadius={28}
-                glowRadius={26}
-                glowIntensity={0.6}
-                animated
-                colors={["#8fd3ff", "#f8fbff", "#c7e4ff"]}
-                fillOpacity={0.28}
-              >
-                <SpotlightCard
-                  className="group h-full rounded-[28px] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.97),rgba(243,248,255,0.94))] p-7 text-[#183153] shadow-[0_18px_36px_rgba(8,35,71,0.16)] transition duration-500 hover:-translate-y-2 hover:shadow-[0_24px_42px_rgba(8,35,71,0.22)]"
-                  spotlightColor="rgba(116, 189, 255, 0.24)"
+            <div className="grid gap-6 md:grid-cols-2">
+              {pillars.map((pillar, index) => (
+                <AnimatedContent
+                  key={pillar.title}
+                  distance={56}
+                  direction={index % 2 === 0 ? "horizontal" : "vertical"}
+                  reverse={false}
+                  duration={0.9}
+                  ease="power3.out"
+                  initialOpacity={0}
+                  animateOpacity
+                  scale={0.95}
+                  threshold={0.15}
+                  delay={index * 0.08}
                 >
-                  <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-[#dceafe] text-[13px] font-semibold uppercase tracking-[0.18em] text-[#1b4f86] transition duration-500 group-hover:scale-110 group-hover:rotate-3">
-                    {index === 0 ? "V" : "M"}
-                  </div>
+                  <BorderGlow
+                    className="h-full"
+                    glowColor="197 92% 76%"
+                    backgroundColor="rgba(121,168,233,0.18)"
+                    borderRadius={28}
+                    glowRadius={26}
+                    glowIntensity={0.6}
+                    animated
+                    colors={["#8fd3ff", "#f8fbff", "#c7e4ff"]}
+                    fillOpacity={0.28}
+                  >
+                    <SpotlightCard
+                      className="group h-full rounded-[28px] border border-white/70 bg-[linear-gradient(180deg,rgba(255,255,255,0.97),rgba(243,248,255,0.94))] p-7 text-[#183153] shadow-[0_18px_36px_rgba(8,35,71,0.16)] transition duration-500 hover:-translate-y-2 hover:shadow-[0_24px_42px_rgba(8,35,71,0.22)]"
+                      spotlightColor="rgba(116, 189, 255, 0.24)"
+                    >
+                      <div className="flex h-11 w-11 items-center justify-center rounded-[16px] bg-[#dceafe] text-[13px] font-semibold uppercase tracking-[0.18em] text-[#1b4f86] transition duration-500 group-hover:scale-110 group-hover:rotate-3">
+                        {index === 0 ? "V" : "M"}
+                      </div>
 
-                  <h3 className="mt-5 text-[1.6rem] font-semibold text-[#162a46] transition duration-500 group-hover:translate-x-1">
-                    {pillar.title}
-                  </h3>
+                      <h3 className="mt-5 text-[1.6rem] font-semibold text-[#162a46] transition duration-500 group-hover:translate-x-1">
+                        {pillar.title}
+                      </h3>
 
-                  <FadeContent blur duration={750 + index * 120} easing="ease-out" initialOpacity={0}>
-                    <p className="mt-4 max-w-md text-[15px] leading-8 text-[#526887]">
-                      {pillar.description}
-                    </p>
-                  </FadeContent>
-                </SpotlightCard>
-              </BorderGlow>
-            </AnimatedContent>
-          ))}
-        </div>
+                      <FadeContent
+                        blur
+                        duration={750 + index * 120}
+                        easing="ease-out"
+                        initialOpacity={0}
+                      >
+                        <p className="mt-4 max-w-md text-[15px] leading-8 text-[#526887]">
+                          {pillar.description}
+                        </p>
+                      </FadeContent>
+                    </SpotlightCard>
+                  </BorderGlow>
+                </AnimatedContent>
+              ))}
+            </div>
           </div>
         </div>
       </section>
@@ -383,7 +404,12 @@ export default function AboutPage() {
                     {capability.title}
                   </h3>
 
-                  <FadeContent blur duration={700} easing="ease-out" initialOpacity={0}>
+                  <FadeContent
+                    blur
+                    duration={700}
+                    easing="ease-out"
+                    initialOpacity={0}
+                  >
                     <p className="mt-4 text-[14px] leading-7 text-[#6b7890]">
                       {capability.description}
                     </p>
@@ -447,14 +473,14 @@ export default function AboutPage() {
                 fillOpacity={0.2}
               >
                 <div className="rounded-[24px] border border-white/30 bg-white/82 p-5 text-center shadow-[0_16px_30px_rgba(17,57,102,0.12)] backdrop-blur-sm">
-                <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#67809a]">
-                  Global trade network
-                </p>
+                  <p className="text-[11px] font-semibold uppercase tracking-[0.24em] text-[#67809a]">
+                    Global trade network
+                  </p>
 
-                <h3 className="mt-3 text-[1.25rem] font-semibold text-[#173053]">
-                  Connecting suppliers, logistics partners, and growth-focused
-                  businesses worldwide.
-                </h3>
+                  <h3 className="mt-3 text-[1.25rem] font-semibold text-[#173053]">
+                    Connecting suppliers, logistics partners, and growth-focused
+                    businesses worldwide.
+                  </h3>
                 </div>
               </BorderGlow>
             </div>
@@ -558,9 +584,9 @@ export default function AboutPage() {
               </h2>
 
               <p className="mt-5 max-w-2xl text-[15px] leading-8 text-[#627089]">
-                We operate under a rigorous framework of international trade laws.
-                Our compliance department ensures every partner, route, and
-                product meets the highest standards of safety and ethics.
+                We operate under a rigorous framework of international trade
+                laws. Our compliance department ensures every partner, route,
+                and product meets the highest standards of safety and ethics.
               </p>
 
               <div className="mt-7 space-y-4">
@@ -636,9 +662,10 @@ export default function AboutPage() {
                 </h3>
 
                 <p className="mt-4 text-[14px] leading-8 text-[#66748c]">
-                  Our zero-tolerance policy for unethical labor practices ensures
-                  that our growth never comes at the cost of human dignity. We
-                  conduct bi-annual audits of all tier-1 and tier-2 suppliers.
+                  Our zero-tolerance policy for unethical labor practices
+                  ensures that our growth never comes at the cost of human
+                  dignity. We conduct bi-annual audits of all tier-1 and tier-2
+                  suppliers.
                 </p>
 
                 <Link
@@ -646,7 +673,7 @@ export default function AboutPage() {
                   className="mt-6 inline-flex items-center gap-2 text-[15px] font-semibold text-[#0d4c8f] transition hover:text-[#0b3f78]"
                 >
                   <ShinyText
-                    text="Read Our Full Ethics Report"
+                    text="Learn About Our Ethics Report"
                     speed={3.2}
                     className="text-[15px] font-semibold"
                     color="#0d4c8f"

@@ -819,23 +819,14 @@ body {
   overflow: hidden;
 }
 
-.why-choose__inner::after {
-  content: "";
-  position: absolute;
-  width: 220px;
-  height: 220px;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  right: 3.5rem;
-  top: 50%;
-  transform: translateY(-50%);
-  box-shadow: inset 0 0 80px rgba(255, 255, 255, 0.05);
-}
-
 .why-choose__features {
   display: flex;
   gap: 1.5rem;
   margin-top: 2.4rem;
+}
+.why-choose__inner .section-heading h2,
+.why-choose__inner .section-heading p {
+  color: #fff;
 }
 
 .feature-card {
